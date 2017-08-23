@@ -1,9 +1,31 @@
 package arrays_and_strings;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class Strings {
+	
+	public static void main(String[] args) {
+		System.out.println(isUnique("hello") + " == false?");
+		System.out.println(isUnique("abcdefg") + " == true?");
+		
+		System.out.println(isUniqueNoExtraStructures("still works") + " == false?");
+		System.out.println(isUniqueNoExtraStructures("oh yea") + " == true?");
+		
+		System.out.println(isUniqueJavaEight("with eight?") + " == false?");
+		System.out.println(isUniqueJavaEight("yes!") + " == true?");
+		
+		System.out.println(arePermutations("hello", "elhl") + " == false?");
+		System.out.println(arePermutations("hello", "elhlo") + " == true?");
+		
+		System.out.println(arePermutationsASCII("hello", "elhl") + " == false?");
+		System.out.println(arePermutationsASCII("hello", "elhlo") + " == true?");
+		
+		String first = "Java is fun!    ";
+		String second = "Nospaceshere!";
+		
+		System.out.println(first + " -> " + toURL(first, 12));
+		System.out.println(second + " -> " + toURL(second, 13));
+	}
 	
 	/* Returns true if the given String contains only unique
 	 * characters, false otherwise */
@@ -79,7 +101,31 @@ public class Strings {
 		
 		return true;
 	}
-
 	
+	/* Replaces every space in the given String with '%20' using the
+	 * given length of the String.  Assumes there is enough space
+	 * at the end of the String after the trueLength for this operation.
+	 * Returns the created String */
+	public static String toURL(String s, int trueLength) {
+		char[] letters = s.toCharArray();
+		
+		for (int i = 0; i < letters.length; i++) {
+			if (letters[i] == ' ') {
+				makeRoomAt(letters, i);
+				letters[i] = '%';
+				letters[i + 1] = '2';
+				letters[i + 2] = '0';
+			}
+		}
+		
+		return new String(letters);
+	}
 	
+	/* Makes room in letters at index to insert a 3-character String
+	 * in place of the assumed space */
+	private static void makeRoomAt(char[] letters, int index) {
+		for (int i = letters.length - 1; i > index + 2; i--) {
+			letters[i] = letters[i - 2];
+		}
+	}
 }
