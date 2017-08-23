@@ -14,20 +14,35 @@ public class Strings {
 		System.out.println(isUniqueJavaEight("with eight?") + " == false?");
 		System.out.println(isUniqueJavaEight("yes!") + " == true?");
 		
+		System.out.println();
+		
 		System.out.println(arePermutations("hello", "elhl") + " == false?");
 		System.out.println(arePermutations("hello", "elhlo") + " == true?");
 		
 		System.out.println(arePermutationsASCII("hello", "elhl") + " == false?");
 		System.out.println(arePermutationsASCII("hello", "elhlo") + " == true?");
 		
+		System.out.println();
+		
 		String first = "Java is fun!    ";
 		String second = "Nospaceshere!";
 		
 		System.out.println(first + " -> " + toURL(first, 12));
 		System.out.println(second + " -> " + toURL(second, 13));
+		
+		System.out.println();
+		
+		System.out.println(isPermutationOfPalindrome("hello world!") 
+				+ " == false");
+		System.out.println(isPermutationOfPalindrome("tactcoa")
+				+ " == true");
+		System.out.println(isPermutationOfPalindromeASCII("hello world!") 
+				+ " == false");
+		System.out.println(isPermutationOfPalindromeASCII("tactcoa")
+				+ " == true");
 	}
 	
-	/* Returns true if the given String contains only unique
+	/* 1.0: Returns true if the given String contains only unique
 	 * characters, false otherwise */
 	public static boolean isUnique(String s) {
 		Set<Character> letters = new HashSet<>();
@@ -42,7 +57,7 @@ public class Strings {
 		return true;
 	}
 	
-	/* Returns true if the given String contains only unique
+	/* 1.1: Returns true if the given String contains only unique
 	 * characters, false otherwise using no extra structures */
 	public static boolean isUniqueNoExtraStructures(String s) {
 		for (int i = 0; i < s.length(); i++) {
@@ -56,13 +71,13 @@ public class Strings {
 		return true;
 	}
 	
-	/* Returns true if the given String contains only unique
+	/* 1.2: Returns true if the given String contains only unique
 	 * characters, false otherwise using Java 8 features */
 	public static boolean isUniqueJavaEight(String s) {
 		return s.chars().parallel().distinct().count() == s.length();
 	}
 	
-	/* Returns true if the two given Strings are permutations and
+	/* 2.0: Returns true if the two given Strings are permutations and
 	 * false otherwise using sorting */
 	public static boolean arePermutations(String s1, String s2) {
 		if (s1.length() != s2.length()) {
@@ -78,7 +93,7 @@ public class Strings {
 		return new String(letters);
 	}
 	
-	/* Returns true if the two given Strings are permutations and
+	/* 2.1: Returns true if the two given Strings are permutations and
 	 * false otherwise.  Assumes the Strings contain only ASCII 
 	 * characters but is faster than sorting */
 	public static boolean arePermutationsASCII(String s1, String s2) {
@@ -102,7 +117,7 @@ public class Strings {
 		return true;
 	}
 	
-	/* Replaces every space in the given String with '%20' using the
+	/* 3.0: Replaces every space in the given String with '%20' using the
 	 * given length of the String.  Assumes there is enough space
 	 * at the end of the String after the trueLength for this operation.
 	 * Returns the created String */
@@ -127,5 +142,63 @@ public class Strings {
 		for (int i = letters.length - 1; i > index + 2; i--) {
 			letters[i] = letters[i - 2];
 		}
+	}
+	
+	/* 4.1: Returns true if the given String is a permutation of a palindrome.
+	 * No assumptions make about the characters in the String. */
+	public static boolean isPermutationOfPalindrome(String s) {
+		Map<Character, Boolean> switches = new HashMap<>();
+		
+		// make a map from character -> boolean
+		//   true indicates the character was seen an odd number of times
+		//   false indicates the character was seen an even number of times
+		for (int i = 0; i < s.length(); i++) {
+			char letter = s.charAt(i);
+			if (!switches.containsKey(letter)) {
+				switches.put(letter, true);
+			} else {
+				switches.put(letter, !switches.get(letter));
+			}
+		}
+		
+		boolean trueSeen = false;
+		
+		// if more than one character was seen an odd number times, 
+		// the String cannot be the permutation of a palindrome
+		for (Character ch : switches.keySet()) {
+			if (switches.get(ch) && !trueSeen) {
+				trueSeen = true;
+			} else if (switches.get(ch)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/* 4.1: Returns true if the given String is a permutation of a palindrome.
+	 * Assumes the given String contains only ASCII characters */
+	public static boolean isPermutationOfPalindromeASCII(String s) {
+		boolean[] switches = new boolean[128];
+		
+		// true indicates the character was seen an odd number of times
+		// false indicates the character was seen an even number of times
+		for (int i = 0; i < s.length(); i++) {
+			char letter = s.charAt(i);
+			switches[letter] = !switches[letter];
+		}
+		
+		boolean trueSeen = false;
+		
+		// if more than one character was seen an odd number times, 
+		// the String cannot be the permutation of a palindrome
+		for (int i = 0; i < switches.length; i++) {
+			if (switches[i] && !trueSeen) {
+				trueSeen = true;
+			} else if (switches[i]) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }
