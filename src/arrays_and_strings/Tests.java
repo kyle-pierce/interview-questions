@@ -135,4 +135,11 @@ public class Tests {
 		Array.zeroMatrix(matrix);
 		assertTrue(equals(zeroedMatrix, matrix));
 	}
+	
+	@Test
+	public void testIsRotation() {
+		assertTrue(Strings.isRotation("waterbottle", "terbottlewa"));
+		assertFalse(Strings.isRotation("terbottlew", "waterbottle"));
+		assertFalse(Strings.isRotation("waterbottle", "terbottlewb"));
+	}
 }

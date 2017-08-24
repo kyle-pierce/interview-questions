@@ -232,4 +232,9 @@ public class Strings {
 		
 		return compressedLength;
 	}
+	
+	/* Returns true if the two given Strings are rotations of each other */
+	public static boolean isRotation(String s1, String s2) {
+		return (s1.length() == s2.length() && (s1 + s1).contains(s2));
+	}
 }
