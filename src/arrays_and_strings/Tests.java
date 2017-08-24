@@ -140,6 +140,6 @@ public class Tests {
 	public void testIsRotation() {
 		assertTrue(Strings.isRotation("waterbottle", "terbottlewa"));
 		assertFalse(Strings.isRotation("terbottlew", "waterbottle"));
-		assertFalse(Strings.isRotation("waterbottle", "terbottlewb"));
+		assertFalse(Strings.isRotation("waterbottle", "terbottlewb")); 
 	}
 }
