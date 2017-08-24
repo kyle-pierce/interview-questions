@@ -118,4 +118,21 @@ public class Tests {
 		}
 		return true;
 	}
+	
+	@Test
+	public void testZeroMatrix() {
+		int[][] matrix = {{1, 1, 1, 1, 1},
+						  {1, 1, 1, 1, 1},
+						  {1, 1, 0, 1, 1},
+						  {1, 1, 1, 1, 1},
+						  {1, 1, 1, 1, 1}};
+		int [][] zeroedMatrix = {{1, 1, 0, 1, 1},
+				  				 {1, 1, 0, 1, 1},
+				  				 {0, 0, 0, 0, 0},
+				  				 {1, 1, 0, 1, 1},
+				  				 {1, 1, 0, 1, 1}};
+		
+		Array.zeroMatrix(matrix);
+		assertTrue(equals(zeroedMatrix, matrix));
+	}
 }
