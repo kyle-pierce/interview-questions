@@ -201,4 +201,33 @@ public class Strings {
 		
 		return true;
 	}
+	
+	/* Returns true if either one replacement, one insertion or one
+	 * removal would turn the given s1 into the given s2, false otherwise */
+	public static boolean oneAway(String s1, String s2) {
+		if (Math.abs(s1.length() - s2.length()) > 1) {
+			return false;
+		}
+		
+		String shorter = s1.length() <= s2.length() ? s1 : s2;
+		String longer = s1.length() <= s2.length() ? s2: s1;
+		
+		boolean oneDifference = false;
+		
+		for (int i = 0, j = 0; i < shorter.length(); i++, j++) {
+			char shortChar = shorter.charAt(i);
+			char longChar = longer.charAt(j);
+			if (shortChar != longChar && oneDifference) {
+				return false;
+			} else if (shortChar != longChar) {
+				oneDifference = true;
+				
+				if (shorter.length() != longer.length()) {
+					i--;
+				}
+			}
+		}
+		
+		return true;
+	}
 }
