@@ -4,44 +4,6 @@ import java.util.*;
 
 public class Strings {
 	
-	public static void main(String[] args) {
-		System.out.println(isUnique("hello") + " == false?");
-		System.out.println(isUnique("abcdefg") + " == true?");
-		
-		System.out.println(isUniqueNoExtraStructures("still works") + " == false?");
-		System.out.println(isUniqueNoExtraStructures("oh yea") + " == true?");
-		
-		System.out.println(isUniqueJavaEight("with eight?") + " == false?");
-		System.out.println(isUniqueJavaEight("yes!") + " == true?");
-		
-		System.out.println();
-		
-		System.out.println(arePermutations("hello", "elhl") + " == false?");
-		System.out.println(arePermutations("hello", "elhlo") + " == true?");
-		
-		System.out.println(arePermutationsASCII("hello", "elhl") + " == false?");
-		System.out.println(arePermutationsASCII("hello", "elhlo") + " == true?");
-		
-		System.out.println();
-		
-		String first = "Java is fun!    ";
-		String second = "Nospaceshere!";
-		
-		System.out.println(first + " -> " + toURL(first, 12));
-		System.out.println(second + " -> " + toURL(second, 13));
-		
-		System.out.println();
-		
-		System.out.println(isPermutationOfPalindrome("hello world!") 
-				+ " == false");
-		System.out.println(isPermutationOfPalindrome("tactcoa")
-				+ " == true");
-		System.out.println(isPermutationOfPalindromeASCII("hello world!") 
-				+ " == false");
-		System.out.println(isPermutationOfPalindromeASCII("tactcoa")
-				+ " == true");
-	}
-	
 	/* 1.0: Returns true if the given String contains only unique
 	 * characters, false otherwise */
 	public static boolean isUnique(String s) {
@@ -229,5 +191,45 @@ public class Strings {
 		}
 		
 		return true;
+	}
+	
+	/* Attempts to compress the given String.  If the compressed length is
+	 * not shorter than the original String, the original is returned.  Otherwise
+	 * returns a compressed version of the String. */
+	public static String compress(String s) {
+		int compressedLength = getCompressedLength(s);
+		
+		if (s.length() <= compressedLength) {
+			return s;
+		}
+		
+		StringBuilder compressed = new StringBuilder(compressedLength);
+		int count = 0;
+		for (int i = 0; i < s.length(); i++) {
+			count++;
+			if (i + 1 == s.length() || s.charAt(i) != s.charAt(i + 1)) {
+				compressed.append(s.charAt(i));
+				compressed.append(count);
+				count = 0;
+			}
+		}
+		
+		return compressed.toString();
+	}
+	
+	/* Returns the length of the compressed version of the given String */
+	private static int getCompressedLength(String s) {
+		int compressedLength = 0;
+		int count = 0;
+		
+		for (int i = 0; i < s.length(); i++) {
+			count++;
+			if (i + 1 == s.length() || s.charAt(i) != s.charAt(i + 1)) {
+				compressedLength += String.valueOf(count).length() + 1;
+				count = 0;
+			}
+		}
+		
+		return compressedLength;
 	}
 }
