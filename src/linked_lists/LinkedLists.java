@@ -72,4 +72,66 @@ public class LinkedLists {
 		}
 	}
 	
+	/* Partitions the list beginning with the given node around the given value
+	 * x such that all values less than x come first, then all values equal to
+	 * x, then all values greater than x. */
+	public static void partitionAround(Node front, int x) {
+		// initialize the needed pointers
+		Node smallerFront = null; Node smallerBack = null;
+		Node equalFront = null; Node equalBack = null;
+		Node greaterFront = null; Node greaterBack = null;
+		
+		// disassemble the list into 3 parts
+		while (front != null) {
+			Node next = front.next;
+			front.next = null;
+			if (front.data < x) {
+				// add to the smaller list
+				smallerFront = (smallerFront == null) ? front : smallerFront;
+				smallerBack.next = front;
+				smallerBack = front;
+			} else if (front.data == x) {
+				// add to the equal list
+				equalFront = (equalFront == null) ? front : equalFront;
+				equalBack.next = front;
+				equalBack = front;
+			} else {
+				// add to the greater list
+				greaterFront = (greaterFront == null) ? front : greaterFront;
+				greaterBack.next = front;
+				greaterBack = front;
+			}
+		}
+		
+		// set the back of the 3rd list to null if not already
+		if (greaterBack != null) {
+			greaterBack.next = null;
+		}
+		
+		// assemble the 3 pieces
+		if (smallerFront == null) {
+			// there are no nodes smaller
+			if (equalFront == null) {
+				// there are no nodes equal
+				// set front to the list of larger elements
+				front = greaterFront;
+			} else {
+				// there are equal nodes
+				// set front to equal elements followed by larger elements
+				front = equalFront;
+				equalBack.next = greaterBack;
+			}
+		} else {
+			// there are some smaller nodes
+			front = smallerFront;
+			if (equalFront == null) {
+				// there are no equal nodes, just smaller and greater
+				smallerBack.next = greaterBack;
+			} else {
+				// there are all 3 classifications of elements
+				smallerBack.next = equalFront;
+				equalBack.next = greaterFront;
+			}
+		}
+	}
 }
