@@ -93,6 +93,21 @@ public class Tests {
 		assertTrue(listsAreEqual(expected, observed));
 	}
 	
+	@Test
+	public void testFindIntersection() {
+		Node list1 = initializeListFromArray(new int[] {0, 2, 4, 6});
+		Node list2 = initializeListFromArray(new int[] {0, 1, 2, 3, 4, 5, 6});
+		Node list3 = initializeListFromArray(new int[] {0, 2, 4, 6});
+		
+		Node intersection = new Node(7, new Node(8, new Node(9)));
+		
+		append(list1, intersection);
+		append(list2, intersection);
+		
+		assertSame(7, LinkedLists.findIntersection(list1, list2).data);
+		assertSame(null, LinkedLists.findIntersection(list1, list3));
+	}
+	
 	/* Returns true if the two lists beginning with the given nodes are equal
 	 * and false otherwise. */
 	private boolean listsAreEqual(Node expected, Node observed) {
@@ -125,5 +140,15 @@ public class Tests {
 			front = new Node(values[i], front);
 		}
 		return front;
+	}
+	
+	/* Appends the given node toBeAdded to the end of the list beginning
+	 * with the given front node. */
+	private void append(Node front, Node toBeAdded) {
+		Node current = front;
+		while (current != null && current.next != null) {
+			current = current.next;
+		}
+		current.next = toBeAdded;
 	}
 }

@@ -206,4 +206,88 @@ public class LinkedLists {
 		
 		return front;
 	}
+	
+	/* Returns true if the list beginning with the given node is a palindrome
+	 * and false otherwise. */
+	public static boolean isPalindrome(Node front) {
+		Node slow = front;
+		Node fast = front;
+		
+		Stack<Node> firstHalf = new Stack<>();
+		
+		while (fast != null && fast.next != null) {
+			firstHalf.push(slow);
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+		
+		if (fast != null) {
+			slow = slow.next;
+		}
+		
+		while (!firstHalf.isEmpty()) {
+			if (slow == null || slow.data != firstHalf.pop().data) {
+				return false;
+			}
+			slow = slow.next;
+		}
+		
+		return true;
+	}
+	
+	/* Returns the first node which appears in both lists or null if 
+	 * there is no such node. */
+	public static Node findIntersection(Node list1, Node list2) {
+		// initialize the two runners
+		Node current1 = list1;
+		Node current2 = list2;
+		
+		/// will store the size of the two lists
+		int size1 = 0;
+		int size2 = 0;
+		
+		// move first runner to the end and keep track of size
+		while (current1 != null && current1.next != null) {
+			++size1;
+			current1 = current1.next;
+		}
+		
+		// move second runner to the end and keep track of size
+		while (current2 != null && current2.next != null) {
+			++size2;
+			current2 = current2.next;
+		}
+		
+		// if the two lists end with difference nodes, there is no
+		// intersection.  Return early to save time.
+		if (current1 != current2) {
+			return null;
+		}
+		
+		// runners back to the front of the lists
+		current1 = list1;
+		current2 = list2;
+		
+		// get the difference between the lists
+		int difference = size1 - size2;
+		
+		// if the first list is longer, move current1 forward by 'difference'
+		for (int i = 0; i < difference; i++) {
+			current1 = current1.next;
+		}
+		
+		// if the second list is longer, move current2 forward by '-difference' 
+		for (int i = difference; i < 0; i++) {
+			current2 = current2.next;
+		}
+		
+		// move the two nodes forward until they are on the intersection node
+		while (current1 != current2) {
+			current1 = current1.next;
+			current2 = current2.next;
+		}
+		
+		// return the intersecting node
+		return current1;
+	}
 }
