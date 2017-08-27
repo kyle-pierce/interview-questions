@@ -315,5 +315,4 @@ public class LinkedLists {
 			return null;
 		}
 	}
-	
 }
