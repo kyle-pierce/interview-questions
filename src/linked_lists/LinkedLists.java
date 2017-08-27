@@ -290,4 +290,30 @@ public class LinkedLists {
 		// return the intersecting node
 		return current1;
 	}
+	
+	/* Returns the node at the front of the loop in the given circular
+	 * list or null if the list is not circular.  */
+	public static Node findLoopHead(Node front) {
+		try {
+			Node slow = front;
+			Node fast = front;
+			
+			do {
+				slow = slow.next;
+				fast = fast.next.next;
+			} while (slow != fast);
+			
+			slow = front;
+			
+			while (slow != fast) {
+				slow = slow.next;
+				fast = fast.next;
+			}
+			
+			return slow;
+		} catch (NullPointerException e) {
+			return null;
+		}
+	}
+	
 }

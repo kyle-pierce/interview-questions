@@ -104,8 +104,23 @@ public class Tests {
 		append(list1, intersection);
 		append(list2, intersection);
 		
-		assertSame(7, LinkedLists.findIntersection(list1, list2).data);
+		assertEquals(intersection, LinkedLists.findIntersection(list1, list2));
 		assertSame(null, LinkedLists.findIntersection(list1, list3));
+	}
+	
+	@Test
+	public void testFindLoopHead() {
+		Node list1 = initializeListFromArray(new int[] {1, 2, 3, 4});
+		Node list2 = initializeListFromArray(new int[] {5, 6, 7, 8});
+		
+		Node loopEnd = new Node(7);
+		Node loopStart = new Node(5, new Node(6, loopEnd));
+		loopEnd.next = loopStart;
+		
+		append(list1, loopStart);
+		
+		assertEquals(loopStart, LinkedLists.findLoopHead(list1));
+		assertSame(null, LinkedLists.findLoopHead(list2));
 	}
 	
 	/* Returns true if the two lists beginning with the given nodes are equal
