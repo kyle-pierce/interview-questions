@@ -2,6 +2,13 @@ package stacks_and_queues;
 
 import java.util.Stack;
 
+/**
+ * Mimics a simple Queue using implemented with two stacks.
+ * 
+ * @author Kyle
+ *
+ * @param <E> element type
+ */
 public class MyQueue<E> {
 	
 	private Stack<E> forward, reverse;
