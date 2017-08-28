@@ -4,9 +4,9 @@ import java.util.EmptyStackException;
 
 /* Holds three stacks which can be accessed by their respective numbers. 
  * Standard stack operations are supported: push, pop, peek, isEmpty  */
-public class TriStack {
+public class TriStack<E> {
 	
-	private int[] elementData;		// holds all elements in the three stacks
+	private E[] elementData;		// holds all elements in the three stacks
 	private StackInfo[] stacks;		// references to information on the stacks
 	
 	public static final int DEFAULT_STACK_CAPACITY = 10;
@@ -18,8 +18,9 @@ public class TriStack {
 	}
 	
 	/* Initializes a new TriStack with three stacks of the given capacity. */
+	@SuppressWarnings("unchecked")
 	public TriStack(int stackCapacity) {
-		elementData = new int[NUMBER_OF_STACKS * stackCapacity];
+		elementData = (E[])new Object[NUMBER_OF_STACKS * stackCapacity];
 		stacks = new StackInfo[NUMBER_OF_STACKS];
 		for (int i = 0; i < NUMBER_OF_STACKS; i++) {
 			stacks[i] = new StackInfo(stackCapacity * i, stackCapacity);
@@ -27,7 +28,7 @@ public class TriStack {
 	}
 	
 	/* Pushes the given element onto the stack with the given number. */
-	public void push(int element, int stackNumber) {
+	public void push(E element, int stackNumber) {
 		StackInfo stack = stacks[stackNumber];
 		
 		if (stack.isFull()) {
@@ -39,9 +40,10 @@ public class TriStack {
 	}
 	
 	/* Doubles the capacity of the stack with the given number. */
+	@SuppressWarnings("unchecked")
 	private void expand(int stackNumber) {
 		int priorCapacity = stacks[stackNumber].capacity;
-		int[] newElementData = new int[elementData.length + priorCapacity];
+		E[] newElementData = (E[])new Object[elementData.length + priorCapacity];
 		int indexOffset = 0;
 		
 		// loop over all the stored stacks
@@ -66,7 +68,7 @@ public class TriStack {
 	}
 	
 	/* Returns the value on top of the stack indicated by the given stackNumber. */
-	public int peek(int stackNumber) {
+	public E peek(int stackNumber) {
 		StackInfo stack = stacks[stackNumber];
 		
 		if (stack.isEmpty()) {
@@ -78,7 +80,7 @@ public class TriStack {
 	
 	/* Removes and returns the value on top of the stack indicated by the
 	 * given stackNumber. */
-	public int pop(int stackNumber) {
+	public E pop(int stackNumber) {
 		StackInfo stack = stacks[stackNumber];
 		
 		if (stack.isEmpty()) {
