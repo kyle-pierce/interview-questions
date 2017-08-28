@@ -5,11 +5,11 @@ import java.util.Stack;
 
 /**
  * Represents a collection of stacks each of which is kept under
- * a certain capacity.  
+ * a certain capacity.
  * 
  * @author Kyle
  *
- * @param <E> type inside the sub-stacks
+ * @param <E> type of elements inside the sub-stacks
  */
 public class SetOfStacks<E> {
 	
