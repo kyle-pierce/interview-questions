@@ -1,9 +1,12 @@
 package trees_and_graphs;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
-public class Graphs {
+public class GraphsAndTrees {
 	
 	/* Returns true if there is a path between the given src and dst nodes
 	 * in the given directed graph. Uses breadth-first search. */
@@ -67,6 +70,28 @@ public class Graphs {
 			root.children[1] = generateBST(arr, middle + 1, right);
 			
 			return root;
+		}
+	}
+	
+	/* Returns a list of LinkedLists, one LinkedList for each level of
+	 * the tree with given overallRoot filled with the nodes of that level. */
+	public List<LinkedList<Node>> listsByLevel(Node overallRoot) {
+		List<LinkedList<Node>> result = new ArrayList<>();
+		fillListWithNodes(overallRoot, result, 0);
+		return result;
+	}
+	
+	/* Fills the given list of LinkedLists, one LinkedList for each level of the
+	 * tree with given root with given level filled with the nodes of that level.  */
+	private void fillListWithNodes(Node root, List<LinkedList<Node>> lists,
+								   int level) {
+		if (root != null) {
+			if (lists.size() == level) {
+				lists.add(new LinkedList<Node>());
+			}
+			lists.get(level).add(root);
+			fillListWithNodes(root.children[0], lists, level + 1);
+			fillListWithNodes(root.children[1], lists, level + 1);
 		}
 	}
 	
