@@ -2,7 +2,7 @@ package trees_and_graphs;
 
 public class Node {
 	
-	public String name;
+	public int data;
 	public Node[] children;
 
 }
