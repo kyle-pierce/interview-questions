@@ -138,11 +138,7 @@ public class GraphsAndTrees {
 			
 			if (root.data < min || root.data > max) {
 				return false;
-			} else if (left != null && left.data > root.data) {
-				return false;
-			} else if (right != null && right.data < root.data) {
-				return false;
-			}
+			} 
 			
 			boolean leftIsValid = validateSearchTree(left, min, root.data);
 			boolean rightIsValid = validateSearchTree(right, root.data, max);
