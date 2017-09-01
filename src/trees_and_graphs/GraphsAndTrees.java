@@ -10,7 +10,7 @@ public class GraphsAndTrees {
 	
 	/* Returns true if there is a path between the given src and dst nodes
 	 * in the given directed graph. Uses breadth-first search. */
-	public boolean pathBetweenNodesBFS(AdjacencyList directedGraph, Node src, Node dst) {
+	public static boolean pathBetweenNodesBFS(AdjacencyList directedGraph, Node src, Node dst) {
 		Set<Node> visiting = new HashSet<Node>();
 		Set<Node> visited = new HashSet<Node>();
 		visiting.add(src);
@@ -36,7 +36,7 @@ public class GraphsAndTrees {
 	
 	/* Returns true if there is a path between the given src and dst nodes
 	 * in the given directed graph. Uses depth-first search. */
-	public boolean pathBetweenNodesDFS(AdjacencyList directedGraph, Node src, Node dst) {
+	public static boolean pathBetweenNodesDFS(AdjacencyList directedGraph, Node src, Node dst) {
 		if (src.equals(dst)) {
 			return true;
 		} else {
@@ -51,14 +51,14 @@ public class GraphsAndTrees {
 	
 	/* Returns the root of a Binary Search Tree of minimal height made from
 	 * the given sorted array of distinct integers. */
-	public Node generateBST(int[] arr) {
+	public static Node generateBST(int[] arr) {
 		return generateBST(arr, 0, arr.length);
 	}
 	
 	/* Returns the root of a Binary Search Tree of minimal height made from
 	 * the given sorted array of distinct integers between the given indices.
 	 * Note that 'left' is inclusive, 'right' is exclusive. */
-	private Node generateBST(int[] arr, int left, int right) {
+	private static Node generateBST(int[] arr, int left, int right) {
 		if (left == right) {
 			return null;
 		} else {
@@ -75,7 +75,7 @@ public class GraphsAndTrees {
 	
 	/* Returns a list of LinkedLists, one LinkedList for each level of
 	 * the tree with given overallRoot filled with the nodes of that level. */
-	public List<LinkedList<Node>> listsByLevel(Node overallRoot) {
+	public static List<LinkedList<Node>> listsByLevel(Node overallRoot) {
 		List<LinkedList<Node>> result = new ArrayList<>();
 		fillListWithNodes(overallRoot, result, 0);
 		return result;
@@ -83,7 +83,7 @@ public class GraphsAndTrees {
 	
 	/* Fills the given list of LinkedLists, one LinkedList for each level of the
 	 * tree with given root with given level filled with the nodes of that level.  */
-	private void fillListWithNodes(Node root, List<LinkedList<Node>> lists,
+	private static void fillListWithNodes(Node root, List<LinkedList<Node>> lists,
 								   int level) {
 		if (root != null) {
 			if (lists.size() == level) {
