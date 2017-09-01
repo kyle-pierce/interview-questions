@@ -84,7 +84,7 @@ public class GraphsAndTrees {
 	/* Fills the given list of LinkedLists, one LinkedList for each level of the
 	 * tree with given root with given level filled with the nodes of that level.  */
 	private static void fillListWithNodes(Node root, List<LinkedList<Node>> lists,
-								   int level) {
+								   		  int level) {
 		if (root != null) {
 			if (lists.size() == level) {
 				lists.add(new LinkedList<Node>());
@@ -94,5 +94,61 @@ public class GraphsAndTrees {
 			fillListWithNodes(root.children[1], lists, level + 1);
 		}
 	}
+	
+	/* Returns true if all left and right subtrees in the given tree have
+	 * heights no more than 1 apart and false otherwise. */
+	public static boolean checkBalanced(Node overallRoot) {
+		if (overallRoot == null) {
+			return true;
+		} else {
+			int leftHeight = getHeight(overallRoot.children[0]);
+			int rightHeight = getHeight(overallRoot.children[0]);
+			boolean heightsOk = Math.abs(leftHeight - rightHeight) <= 1;
+			return heightsOk && checkBalanced(overallRoot.children[0]) 
+							 && checkBalanced(overallRoot.children[1]);
+		}
+	}
+	
+	/* Returns the height of the tree beginning with the given root.  The empty
+	 * tree is defined to have a height of 0. */
+	private static int getHeight(Node root) {
+		if (root == null) {
+			return 0;
+		} else {
+			int leftHeight = getHeight(root.children[0]);
+			int rightHeight = getHeight(root.children[1]);
+			return 1 + Math.max(leftHeight, rightHeight);
+		}
+	}
+	
+	/* Returns true if the binary tree with given root is a binary search tree.
+	 * The empty tree is a valid binary search tree. */
+	public static boolean validateSearchTree(Node overallRoot) {
+		return validateSearchTree(overallRoot, Integer.MIN_VALUE, Integer.MAX_VALUE);
+	}
+	
+	/* Returns true if the tree with given root is a binary search tree and contains
+	 * only values between the given min and max inclusive. */
+	private static boolean validateSearchTree(Node root, int min, int max) {
+		if (root == null) {
+			return true;
+		} else {
+			Node left = root.children[0];
+			Node right = root.children[1];
+			
+			if (root.data < min || root.data > max) {
+				return false;
+			} else if (left != null && left.data > root.data) {
+				return false;
+			} else if (right != null && right.data < root.data) {
+				return false;
+			}
+			
+			boolean leftIsValid = validateSearchTree(left, min, root.data);
+			boolean rightIsValid = validateSearchTree(right, root.data, max);
+			
+			return leftIsValid && rightIsValid;
+		}
+	}	
 	
 }
