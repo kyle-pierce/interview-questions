@@ -23,7 +23,7 @@ public class GraphsAndTrees {
 				} else {
 					visited.add(node);
 					for (Node child : node.children) {
-						if (!visited.contains(child)) {
+						if (child != null && !visited.contains(child)) {
 							toBeVisited.add(child);
 						}
 					}
@@ -37,6 +37,9 @@ public class GraphsAndTrees {
 	/* Returns true if there is a path between the given src and dst nodes
 	 * in the given directed graph. Uses depth-first search. */
 	public static boolean pathBetweenNodesDFS(AdjacencyList directedGraph, Node src, Node dst) {
+		if (src == null || dst == null) {
+			return false;
+		}
 		if (src.equals(dst)) {
 			return true;
 		} else {
@@ -63,9 +66,8 @@ public class GraphsAndTrees {
 			return null;
 		} else {
 			int middle = left + (right - left) / 2;
-			Node root = new Node();
+			Node root = new Node(arr[middle]);
 			
-			root.data = arr[middle];
 			root.children[0] = generateBST(arr, left, middle);
 			root.children[1] = generateBST(arr, middle + 1, right);
 			
