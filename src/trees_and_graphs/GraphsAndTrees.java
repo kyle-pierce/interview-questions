@@ -99,15 +99,15 @@ public class GraphsAndTrees {
 	
 	/* Returns true if all left and right subtrees in the given tree have
 	 * heights no more than 1 apart and false otherwise. */
-	public static boolean checkBalanced(Node overallRoot) {
+	public static boolean isBalanced(Node overallRoot) {
 		if (overallRoot == null) {
 			return true;
 		} else {
 			int leftHeight = getHeight(overallRoot.children[0]);
-			int rightHeight = getHeight(overallRoot.children[0]);
+			int rightHeight = getHeight(overallRoot.children[1]);
 			boolean heightsOk = Math.abs(leftHeight - rightHeight) <= 1;
-			return heightsOk && checkBalanced(overallRoot.children[0]) 
-							 && checkBalanced(overallRoot.children[1]);
+			return heightsOk && isBalanced(overallRoot.children[0]) 
+							 && isBalanced(overallRoot.children[1]);
 		}
 	}
 	
@@ -125,7 +125,7 @@ public class GraphsAndTrees {
 	
 	/* Returns true if the binary tree with given root is a binary search tree.
 	 * The empty tree is a valid binary search tree. */
-	public static boolean validateSearchTree(Node overallRoot) {
+	public static boolean isSearchTree(Node overallRoot) {
 		return validateSearchTree(overallRoot, Integer.MIN_VALUE, Integer.MAX_VALUE);
 	}
 	

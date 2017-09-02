@@ -4,6 +4,10 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Tests {
 	
 	@Test
@@ -51,8 +55,8 @@ public class Tests {
 		int[] arr = {1, 2, 3, 4, 5, 6, 7};
 		Node observed = GraphsAndTrees.generateBST(arr);
 		
-		assertTrue(GraphsAndTrees.checkBalanced(observed));
-		assertTrue(GraphsAndTrees.validateSearchTree(observed));
+		assertTrue(GraphsAndTrees.isBalanced(observed));
+		assertTrue(GraphsAndTrees.isSearchTree(observed));
 	}
 	
 	@Test
@@ -60,8 +64,66 @@ public class Tests {
 		int[] arr = {1, 2, 3, 4, 5, 7};
 		Node observed = GraphsAndTrees.generateBST(arr);
 		
-		assertTrue(GraphsAndTrees.checkBalanced(observed));
-		assertTrue(GraphsAndTrees.validateSearchTree(observed));
+		assertTrue(GraphsAndTrees.isBalanced(observed));
+		assertTrue(GraphsAndTrees.isSearchTree(observed));
+	}
+	
+	@Test
+	public void testListsByLevel() {
+		Node overallRoot = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5, 6, 7});
+		List<LinkedList<Node>> lists = GraphsAndTrees.listsByLevel(overallRoot);
+		
+		Node one = new Node(1);
+		Node two = new Node(2);
+		Node three = new Node(3);
+		Node four = new Node(4);
+		Node five = new Node(5);
+		Node six = new Node(6);
+		Node seven = new Node(7);
+		
+		assertTrue(lists.get(0).equals(Arrays.asList(new Node[] {four})));
+		assertTrue(lists.get(1).equals(Arrays.asList(new Node[] {two, six})));
+		assertTrue(lists.get(2).equals(Arrays.asList(new Node[] {one, three, 
+																five, seven})));
+	}
+	
+	@Test
+	public void testIsBalancedTrue() {
+		Node root = null;
+		assertTrue(GraphsAndTrees.isBalanced(root));
+		
+		root = new Node(2);
+		assertTrue(GraphsAndTrees.isBalanced(root));
+		
+		root.children[0] = new Node(1);
+		root.children[1] = new Node(3);
+		assertTrue(GraphsAndTrees.isBalanced(root));
+		
+		root.children[0].children[0] = new Node(4);
+		assertTrue(GraphsAndTrees.isBalanced(root));
+		
+		root.children[1].children[1] = new Node(7);
+		assertTrue(GraphsAndTrees.isBalanced(root));
+		
+		root.children[0].children[1] = new Node(5);
+		assertTrue(GraphsAndTrees.isBalanced(root));
+		
+		root.children[1].children[0] = new Node(6);
+		assertTrue(GraphsAndTrees.isBalanced(root));
+	}
+	
+	@Test
+	public void testIsBalancedFalse() {
+		Node root = new Node(0);
+		root.children[0] = new Node(1);
+		root.children[0].children[0] = new Node(2);
+		assertFalse(GraphsAndTrees.isBalanced(root));
+		
+		root.children[0].children[1] = new Node(3);
+		assertFalse(GraphsAndTrees.isBalanced(root));
+		
+		root.children[0].children[0].children[0] = new Node(4);
+		assertFalse(GraphsAndTrees.isBalanced(root));
 	}
 	
 	/* Returns true if the two trees with the given roots are equal,
