@@ -5,6 +5,9 @@ public class Node {
 	public int data;
 	public Node[] children;
 	
+	// only usable when specified in problem
+	public Node parent;
+	
 	public Node(int data) {
 		this.data = data;
 		children = new Node[10];

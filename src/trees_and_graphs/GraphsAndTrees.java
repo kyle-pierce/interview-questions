@@ -144,6 +144,40 @@ public class GraphsAndTrees {
 			
 			return leftIsValid && rightIsValid;
 		}
-	}	
+	}
+	
+	/* Returns the immediate successor of the given root in the BST in which
+	 * the given root exists.  Returns null if there is no successor. */
+	public Node getSuccessor(Node root) {
+		if (root == null) {
+			return null;
+		}
+		
+		if (root.children[1] != null) {
+			// right subtree -> find leftmost node in that tree
+			return getLeftMostNode(root.children[1]);
+		} else {
+			// no right subtree -> go up until we were on a left child
+			// or get all the way back to the top of the tree
+			Node parent = root.parent;
+			Node child = root;
+			while (parent != null && parent.children[0] != child) {
+				child = parent;
+				parent = child.parent;
+			}
+			// return the first parent to the right of the child or null
+			return parent;
+		}
+	}
+	
+	/* Returns the leftmost node in the tree with the given root.  Returns
+	 * null if the given root is null. */
+	private Node getLeftMostNode(Node root) {
+		Node current = root;
+		while (current != null && current.children[0] != null) {
+			current = current.children[0];
+		}
+		return current;
+	}
 	
 }
