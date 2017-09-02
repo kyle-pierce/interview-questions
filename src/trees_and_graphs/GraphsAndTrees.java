@@ -135,15 +135,12 @@ public class GraphsAndTrees {
 		if (root == null) {
 			return true;
 		} else {
-			Node left = root.children[0];
-			Node right = root.children[1];
-			
 			if (root.data < min || root.data > max) {
 				return false;
 			} 
 			
-			boolean leftIsValid = validateSearchTree(left, min, root.data);
-			boolean rightIsValid = validateSearchTree(right, root.data, max);
+			boolean leftIsValid = validateSearchTree(root.children[0], min, root.data);
+			boolean rightIsValid = validateSearchTree(root.children[1], root.data, max);
 			
 			return leftIsValid && rightIsValid;
 		}

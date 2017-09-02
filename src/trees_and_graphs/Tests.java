@@ -126,6 +126,21 @@ public class Tests {
 		assertFalse(GraphsAndTrees.isBalanced(root));
 	}
 	
+	@Test
+	public void testIsSearchTree() {
+		Node overallRoot = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5});
+		assertTrue(GraphsAndTrees.isSearchTree(overallRoot));
+		
+		overallRoot.children[0].children[0].data = -1;
+		assertTrue(GraphsAndTrees.isSearchTree(overallRoot));
+		
+		overallRoot.children[1].children[1] = new Node(100);
+		assertTrue(GraphsAndTrees.isSearchTree(overallRoot));
+		
+		overallRoot.data = 42;
+		assertFalse(GraphsAndTrees.isSearchTree(overallRoot));
+	}
+	
 	/* Returns true if the two trees with the given roots are equal,
 	 * meaning they have the exact same nodes in the exact same
 	 * locations.  Assumes the two trees have the same number of
