@@ -123,8 +123,8 @@ public class GraphsAndTrees {
 		}
 	}
 	
-	/* Returns true if the binary tree with given root is a binary search tree.
-	 * The empty tree is a valid binary search tree. */
+	/* Returns true if the binary tree with given root is a binary search tree
+	 * and false otherwise. The empty tree is a valid binary search tree. */
 	public static boolean isSearchTree(Node overallRoot) {
 		return validateSearchTree(overallRoot, Integer.MIN_VALUE, Integer.MAX_VALUE);
 	}
