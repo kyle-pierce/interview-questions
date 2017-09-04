@@ -148,7 +148,7 @@ public class GraphsAndTrees {
 	
 	/* Returns the immediate successor of the given root in the BST in which
 	 * the given root exists.  Returns null if there is no successor. */
-	public Node getSuccessor(Node root) {
+	public Node getSuccessor(Node root) { 
 		if (root == null) {
 			return null;
 		}
