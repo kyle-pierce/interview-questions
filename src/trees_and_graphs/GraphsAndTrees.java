@@ -180,4 +180,22 @@ public class GraphsAndTrees {
 		return current;
 	}
 	
+	public List<String> buildOrder(List<String> projects, List<Pair> dependencies) {
+		AdjacencyList graph = new AdjacencyList();
+		for (Pair p : dependencies) {
+			if (!graph.contains(p.from)) {
+				graph.addNode(p.from);
+			}
+			if (!graph.contains(p.to)) {
+				graph.addNode(p.to);
+			}
+			graph.addConnection(p.from, p.to);
+		}
+	}
+	
+	private static class Pair {
+		public String from;
+		public String to;
+	}
+	
 }
