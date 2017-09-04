@@ -191,6 +191,7 @@ public class GraphsAndTrees {
 			}
 			graph.addConnection(p.from, p.to);
 		}
+		return null;
 	}
 	
 	private static class Pair {
