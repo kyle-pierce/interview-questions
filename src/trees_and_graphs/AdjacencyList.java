@@ -2,10 +2,10 @@ package trees_and_graphs;
 
 public class AdjacencyList {
 	
-	public Node[] nodes;
+	public TreeNode[] nodes;
 	
 	public AdjacencyList() {
-		nodes = new Node[10];
+		nodes = new TreeNode[10];
 	}
 	
 	public void addNode(String data) {

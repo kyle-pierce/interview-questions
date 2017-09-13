@@ -1,16 +1,16 @@
 package trees_and_graphs;
 
-public class Node {
+public class TreeNode {
 	
 	public int data;
-	public Node[] children;
+	public TreeNode[] children;
 	
 	// only usable when specified in problem
-	public Node parent;
+	public TreeNode parent;
 	
-	public Node(int data) {
+	public TreeNode(int data) {
 		this.data = data;
-		children = new Node[10];
+		children = new TreeNode[10];
 	}
 	
 	@Override
@@ -18,7 +18,7 @@ public class Node {
 		if (other == null) {
 			return false;
 		} else {
-			return other instanceof Node && ((Node)other).data == data;
+			return other instanceof TreeNode && ((TreeNode)other).data == data;
 		}
 	}
 	
