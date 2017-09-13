@@ -35,13 +35,24 @@ public class TreeNode {
 		this(data, null, null, parent);
 	}
 	
+	/** 
+	 * Constructs a new TreeNode with the given data and children.
+	 * 
+	 * @param data data to be stored in this node
+	 * @param left TreeNode which should be the left child
+	 * @param right TreeNode which should be the right child
+	 */
+	public TreeNode(int data, TreeNode left, TreeNode right) {
+		this(data, left, right, null);
+	}
+	
 	/**
 	 * Constructs a new TreeNode with the given data and left and
 	 * right children.
 	 * 
 	 * @param data data to be stored in the node
-	 * @param left TreeNode which is the left child 
-	 * @param right TreeNode with is the right child
+	 * @param left TreeNode which should be the left child
+	 * @param right TreeNode which should be the right child
 	 * @boolean parent the parent of this node or null if this node
 	 * should not store its parent
 	 */

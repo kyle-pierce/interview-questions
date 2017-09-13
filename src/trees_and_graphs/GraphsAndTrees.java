@@ -66,12 +66,8 @@ public class GraphsAndTrees {
 			return null;
 		} else {
 			int middle = left + (right - left) / 2;
-			TreeNode root = new TreeNode(arr[middle]);
-			
-			root.children[0] = generateBST(arr, left, middle);
-			root.children[1] = generateBST(arr, middle + 1, right);
-			
-			return root;
+			return new TreeNode(arr[middle], generateBST(arr, left, middle),
+											 generateBST(arr, middle + 1, right));
 		}
 	}
 	
