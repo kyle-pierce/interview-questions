@@ -10,19 +10,20 @@ public class GraphsAndTrees {
 	
 	/* Returns true if there is a path between the given src and dst nodes
 	 * in the given directed graph. Uses breadth-first search. */
-	public static boolean pathBetweenNodesBFS(AdjacencyList directedGraph, TreeNode src, TreeNode dst) {
-		Set<TreeNode> visiting = new HashSet<TreeNode>();
-		Set<TreeNode> visited = new HashSet<TreeNode>();
+	public static <E> boolean pathBetweenNodesBFS(AdjacencyList directedGraph, 
+												  GraphNode<E> src, GraphNode<E> dst) {
+		Set<GraphNode<E>> visiting = new HashSet<GraphNode<E>>();
+		Set<GraphNode<E>> visited = new HashSet<GraphNode<E>>();
 		visiting.add(src);
 		
 		while (!visiting.isEmpty()) {
-			Set<TreeNode> toBeVisited = new HashSet<TreeNode>();
-			for (TreeNode node : visiting) {
+			Set<GraphNode<E>> toBeVisited = new HashSet<GraphNode<E>>();
+			for (GraphNode<E> node : visiting) {
 				if (node.equals(dst)) {
 					return true;
 				} else {
 					visited.add(node);
-					for (TreeNode child : node.children) {
+					for (GraphNode<E> child : node.getChildren()) {
 						if (child != null && !visited.contains(child)) {
 							toBeVisited.add(child);
 						}
@@ -36,15 +37,16 @@ public class GraphsAndTrees {
 	
 	/* Returns true if there is a path between the given src and dst nodes
 	 * in the given directed graph. Uses depth-first search. */
-	public static boolean pathBetweenNodesDFS(AdjacencyList directedGraph, TreeNode src, TreeNode dst) {
+	public static <E> boolean pathBetweenNodesDFS(AdjacencyList directedGraph, 
+											  	  GraphNode<E> src, GraphNode<E> dst) {
 		if (src == null || dst == null) {
 			return false;
 		}
 		if (src.equals(dst)) {
 			return true;
 		} else {
-			for (int i = 0; i < src.children.length; i++) {
-				if (pathBetweenNodesDFS(directedGraph, src.children[i], dst)) {
+			for (GraphNode<E> child : src.getChildren()) {
+				if (pathBetweenNodesDFS(directedGraph, child, dst)) {
 					return true;
 				}
 			}
