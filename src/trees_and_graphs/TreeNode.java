@@ -6,22 +6,22 @@ package trees_and_graphs;
  * 
  * @author Kyle
  */
-public class TreeNode {
+public class TreeNode<E> {
 	
 	public static final int DEFAULT_CHILDREN = 2;
 	
-	public int data;
-	public TreeNode[] children;
+	public E data;
+	public TreeNode<E>[] children;
 	
 	// only usable when specified in problem
-	public TreeNode parent;
+	public TreeNode<E> parent;
 	
 	/**
 	 * Constructs a new TreeNode with the given data.
 	 * 
 	 * @param data data to be stored in this node
 	 */
-	public TreeNode(int data) {
+	public TreeNode(E data) {
 		this(data, null, null, null);
 	}
 	
@@ -31,7 +31,7 @@ public class TreeNode {
 	 * @param data data to be stored in this node
 	 * @param parent parent node of the node to be constructed
 	 */
-	public TreeNode(int data, TreeNode parent) {
+	public TreeNode(E data, TreeNode<E> parent) {
 		this(data, null, null, parent);
 	}
 	
@@ -42,7 +42,7 @@ public class TreeNode {
 	 * @param left TreeNode which should be the left child
 	 * @param right TreeNode which should be the right child
 	 */
-	public TreeNode(int data, TreeNode left, TreeNode right) {
+	public TreeNode(E data, TreeNode<E> left, TreeNode<E> right) {
 		this(data, left, right, null);
 	}
 	
@@ -56,9 +56,11 @@ public class TreeNode {
 	 * @boolean parent the parent of this node or null if this node
 	 * should not store its parent
 	 */
-	public TreeNode(int data, TreeNode left, TreeNode right, TreeNode parent) {
+	@SuppressWarnings("unchecked")
+	public TreeNode(E data, TreeNode<E> left, TreeNode<E> right, 
+					TreeNode<E> parent) {
 		this.data = data;
-		children = new TreeNode[DEFAULT_CHILDREN];
+		children = (TreeNode<E>[]) new Object[DEFAULT_CHILDREN];
 		children[0] = left;
 		children[1] = right;
 		this.parent = parent;
@@ -84,13 +86,14 @@ public class TreeNode {
 		if (other == null) {
 			return false;
 		} else {
-			return other instanceof TreeNode && ((TreeNode)other).data == data;
+			return other instanceof TreeNode<?> && 
+					this.data.equals(((TreeNode<?>)other).data);
 		}
 	}
 	
 	@Override
 	public int hashCode() {
-		return data;
+		return data.hashCode();
 	}
 
 }
