@@ -12,19 +12,19 @@ public class Tests {
 	
 	@Test
 	public void testPathBetweenNodesBFS() {
-		AdjacencyList graph = new AdjacencyList();
-		GraphNode<Integer> src = new GraphNode<>(1);
-		GraphNode<Integer> dst = new GraphNode<>(3);
-		GraphNode<Integer> intermediate = new GraphNode<>(2);
-		GraphNode<Integer> unConnected = new GraphNode<>(4);
+		AdjacencyList<Integer> graph = new AdjacencyList<>();
+		int src = 1;
+		int dst = 3;
+		int intermediate = 2;
+		int unConnected = 4;
 		
-		graph.nodes[0] = src;
-		graph.nodes[1] = intermediate;
-		graph.nodes[2] = dst;
-		graph.nodes[3] = unConnected;
+		graph.add(src);
+		graph.add(intermediate);
+		graph.add(dst);
+		graph.add(unConnected);
 		
-		src.addChild(intermediate);
-		intermediate.addChild(dst);
+		graph.addChild(src, intermediate);
+		graph.addChild(intermediate, dst);
 		
 		assertTrue(GraphsAndTrees.pathBetweenNodesBFS(graph, src, dst));
 		assertFalse(GraphsAndTrees.pathBetweenNodesBFS(graph, src, unConnected));
@@ -32,19 +32,19 @@ public class Tests {
 	
 	@Test
 	public void testPathsBetweenNodesDFS() {
-		AdjacencyList graph = new AdjacencyList();
-		GraphNode<Integer> src = new GraphNode<>(1);
-		GraphNode<Integer> dst = new GraphNode<>(3);
-		GraphNode<Integer> intermediate = new GraphNode<>(2);
-		GraphNode<Integer> unConnected = new GraphNode<>(4);
+		AdjacencyList<Integer> graph = new AdjacencyList<>();
+		int src = 1;
+		int dst = 3;
+		int intermediate = 2;
+		int unConnected = 4;
 		
-		graph.nodes[0] = src;
-		graph.nodes[1] = intermediate;
-		graph.nodes[2] = dst;
-		graph.nodes[3] = unConnected;
+		graph.add(src);
+		graph.add(intermediate);
+		graph.add(dst);
+		graph.add(unConnected);
 		
-		src.addChild(intermediate);
-		intermediate.addChild(dst);
+		graph.addChild(src, intermediate);
+		graph.addChild(intermediate, dst);
 		
 		assertTrue(GraphsAndTrees.pathBetweenNodesDFS(graph, src, dst));
 		assertFalse(GraphsAndTrees.pathBetweenNodesDFS(graph, src, unConnected));

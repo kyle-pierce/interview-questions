@@ -10,20 +10,20 @@ public class GraphsAndTrees {
 	
 	/* Returns true if there is a path between the given src and dst nodes
 	 * in the given directed graph. Uses breadth-first search. */
-	public static <E> boolean pathBetweenNodesBFS(AdjacencyList directedGraph, 
-												  GraphNode<E> src, GraphNode<E> dst) {
-		Set<GraphNode<E>> visiting = new HashSet<GraphNode<E>>();
-		Set<GraphNode<E>> visited = new HashSet<GraphNode<E>>();
+	public static <E> boolean pathBetweenNodesBFS(AdjacencyList<E> graph, 
+												  E src, E dst) {
+		Set<E> visiting = new HashSet<E>();
+		Set<E> visited = new HashSet<E>();
 		visiting.add(src);
 		
 		while (!visiting.isEmpty()) {
-			Set<GraphNode<E>> toBeVisited = new HashSet<GraphNode<E>>();
-			for (GraphNode<E> node : visiting) {
+			Set<E> toBeVisited = new HashSet<E>();
+			for (E node : visiting) {
 				if (node.equals(dst)) {
 					return true;
 				} else {
 					visited.add(node);
-					for (GraphNode<E> child : node.getChildren()) {
+					for (E child : graph.getChildren(node)) {
 						if (child != null && !visited.contains(child)) {
 							toBeVisited.add(child);
 						}
@@ -37,16 +37,16 @@ public class GraphsAndTrees {
 	
 	/* Returns true if there is a path between the given src and dst nodes
 	 * in the given directed graph. Uses depth-first search. */
-	public static <E> boolean pathBetweenNodesDFS(AdjacencyList directedGraph, 
-											  	  GraphNode<E> src, GraphNode<E> dst) {
+	public static <E> boolean pathBetweenNodesDFS(AdjacencyList<E> graph, 
+											  	  E src, E dst) {
 		if (src == null || dst == null) {
 			return false;
 		}
 		if (src.equals(dst)) {
 			return true;
 		} else {
-			for (GraphNode<E> child : src.getChildren()) {
-				if (pathBetweenNodesDFS(directedGraph, child, dst)) {
+			for (E child : graph.getChildren(src)) {
+				if (pathBetweenNodesDFS(graph, child, dst)) {
 					return true;
 				}
 			}
@@ -181,15 +181,15 @@ public class GraphsAndTrees {
 	/* Given the list of projects and dependencies, returns a project order in which
 	 * no projects appear before those on which they depend. */
 	public List<String> buildOrder(List<String> projects, List<Pair> dependencies) {
-		AdjacencyList graph = new AdjacencyList();
+		AdjacencyList<String> graph = new AdjacencyList<>();
 		for (Pair p : dependencies) {
 			if (!graph.contains(p.from)) {
-				graph.addNode(p.from);
+				graph.add(p.from);
 			}
 			if (!graph.contains(p.to)) {
-				graph.addNode(p.to);
+				graph.add(p.to);
 			}
-			graph.addConnection(p.from, p.to);
+			graph.addChild(p.from, p.to);
 		}
 		return null;
 	}
