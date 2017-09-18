@@ -10,7 +10,7 @@ public class TreeNode<E> {
 	
 	public static final int DEFAULT_CHILDREN = 2;
 	
-	public E data;
+	public E data; 
 	public TreeNode<E>[] children;
 	
 	// only usable when specified in problem
