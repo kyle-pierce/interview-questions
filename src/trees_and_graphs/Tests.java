@@ -53,7 +53,7 @@ public class Tests {
 	@Test
 	public void testGenerateBSTFull() {
 		int[] arr = {1, 2, 3, 4, 5, 6, 7};
-		TreeNode observed = GraphsAndTrees.generateBST(arr);
+		TreeNode<Integer> observed = GraphsAndTrees.generateBST(arr);
 		
 		assertTrue(GraphsAndTrees.isBalanced(observed));
 		assertTrue(GraphsAndTrees.isSearchTree(observed));
@@ -62,7 +62,7 @@ public class Tests {
 	@Test
 	public void testGenerateBSTNonFull() {
 		int[] arr = {1, 2, 3, 4, 5, 7};
-		TreeNode observed = GraphsAndTrees.generateBST(arr);
+		TreeNode<Integer> observed = GraphsAndTrees.generateBST(arr);
 		
 		assertTrue(GraphsAndTrees.isBalanced(observed));
 		assertTrue(GraphsAndTrees.isSearchTree(observed));
@@ -70,71 +70,71 @@ public class Tests {
 	
 	@Test
 	public void testListsByLevel() {
-		TreeNode overallRoot = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5, 6, 7});
-		List<LinkedList<TreeNode>> lists = GraphsAndTrees.listsByLevel(overallRoot);
+		TreeNode<Integer> overallRoot = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5, 6, 7});
+		List<LinkedList<TreeNode<Integer>>> lists = GraphsAndTrees.listsByLevel(overallRoot);
 		
-		TreeNode one = new TreeNode(1);
-		TreeNode two = new TreeNode(2);
-		TreeNode three = new TreeNode(3);
-		TreeNode four = new TreeNode(4);
-		TreeNode five = new TreeNode(5);
-		TreeNode six = new TreeNode(6);
-		TreeNode seven = new TreeNode(7);
+		TreeNode<Integer> one = new TreeNode<Integer>(1);
+		TreeNode<Integer> two = new TreeNode<Integer>(2);
+		TreeNode<Integer> three = new TreeNode<Integer>(3);
+		TreeNode<Integer> four = new TreeNode<Integer>(4);
+		TreeNode<Integer> five = new TreeNode<Integer>(5);
+		TreeNode<Integer> six = new TreeNode<Integer>(6);
+		TreeNode<Integer> seven = new TreeNode<Integer>(7);
 		
-		assertTrue(lists.get(0).equals(Arrays.asList(new TreeNode[] {four})));
-		assertTrue(lists.get(1).equals(Arrays.asList(new TreeNode[] {two, six})));
-		assertTrue(lists.get(2).equals(Arrays.asList(new TreeNode[] {one, three, 
-																five, seven})));
+		assertTrue(lists.get(0).equals(Arrays.asList(new Object[] {four})));
+		assertTrue(lists.get(1).equals(Arrays.asList(new Object[] {two, six})));
+		assertTrue(lists.get(2).equals(Arrays.asList(new Object[] {one, three, 
+																   five, seven})));
 	}
 	
 	@Test
 	public void testIsBalancedTrue() {
-		TreeNode root = null;
+		TreeNode<Integer> root = null;
 		assertTrue(GraphsAndTrees.isBalanced(root));
 		
-		root = new TreeNode(2);
+		root = new TreeNode<Integer>(2);
 		assertTrue(GraphsAndTrees.isBalanced(root));
 		
-		root.children[0] = new TreeNode(1);
-		root.children[1] = new TreeNode(3);
+		root.children[0] = new TreeNode<Integer>(1);
+		root.children[1] = new TreeNode<Integer>(3);
 		assertTrue(GraphsAndTrees.isBalanced(root));
 		
-		root.children[0].children[0] = new TreeNode(4);
+		root.children[0].children[0] = new TreeNode<Integer>(4);
 		assertTrue(GraphsAndTrees.isBalanced(root));
 		
-		root.children[1].children[1] = new TreeNode(7);
+		root.children[1].children[1] = new TreeNode<Integer>(7);
 		assertTrue(GraphsAndTrees.isBalanced(root));
 		
-		root.children[0].children[1] = new TreeNode(5);
+		root.children[0].children[1] = new TreeNode<Integer>(5);
 		assertTrue(GraphsAndTrees.isBalanced(root));
 		
-		root.children[1].children[0] = new TreeNode(6);
+		root.children[1].children[0] = new TreeNode<Integer>(6);
 		assertTrue(GraphsAndTrees.isBalanced(root));
 	}
 	
 	@Test
 	public void testIsBalancedFalse() {
-		TreeNode root = new TreeNode(0);
-		root.children[0] = new TreeNode(1);
-		root.children[0].children[0] = new TreeNode(2);
+		TreeNode<Integer> root = new TreeNode<Integer>(0);
+		root.children[0] = new TreeNode<Integer>(1);
+		root.children[0].children[0] = new TreeNode<Integer>(2);
 		assertFalse(GraphsAndTrees.isBalanced(root));
 		
-		root.children[0].children[1] = new TreeNode(3);
+		root.children[0].children[1] = new TreeNode<Integer>(3);
 		assertFalse(GraphsAndTrees.isBalanced(root));
 		
-		root.children[0].children[0].children[0] = new TreeNode(4);
+		root.children[0].children[0].children[0] = new TreeNode<Integer>(4);
 		assertFalse(GraphsAndTrees.isBalanced(root));
 	}
 	
 	@Test
 	public void testIsSearchTree() {
-		TreeNode overallRoot = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5});
+		TreeNode<Integer> overallRoot = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5});
 		assertTrue(GraphsAndTrees.isSearchTree(overallRoot));
 		
 		overallRoot.children[0].children[0].data = -1;
 		assertTrue(GraphsAndTrees.isSearchTree(overallRoot));
 		
-		overallRoot.children[1].children[1] = new TreeNode(100);
+		overallRoot.children[1].children[1] = new TreeNode<Integer>(100);
 		assertTrue(GraphsAndTrees.isSearchTree(overallRoot));
 		
 		overallRoot.data = 42;
@@ -145,7 +145,7 @@ public class Tests {
 	 * meaning they have the exact same nodes in the exact same
 	 * locations.  Assumes the two trees have the same number of
 	 * branches from each root. Returns false otherwise. */
-	private boolean treesAreEqual(TreeNode observed, TreeNode expected) {
+	private boolean treesAreEqual(TreeNode<Integer> observed, TreeNode<Integer> expected) {
 		if (observed == null && expected == null) {
 			// both null -> true
 			return true;
@@ -168,7 +168,7 @@ public class Tests {
 	
 	/* Prints the tree with given root to System.out in a pre-order
 	 * traversal format. */
-	private void printInOrder(TreeNode root) {
+	private void printInOrder(TreeNode<Integer> root) {
 		if (root != null) {
 			printInOrder(root.children[0]);
 			System.out.print(root.data + " ");

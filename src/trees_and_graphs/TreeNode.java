@@ -1,5 +1,8 @@
 package trees_and_graphs;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 /**
  * Represents a node in an n-ary tree, storing data and links
  * to the children.  
@@ -60,7 +63,7 @@ public class TreeNode<E> {
 	public TreeNode(E data, TreeNode<E> left, TreeNode<E> right, 
 					TreeNode<E> parent) {
 		this.data = data;
-		children = (TreeNode<E>[]) new Object[DEFAULT_CHILDREN];
+		children = (TreeNode<E>[]) Array.newInstance(getClass(), DEFAULT_CHILDREN);
 		children[0] = left;
 		children[1] = right;
 		this.parent = parent;

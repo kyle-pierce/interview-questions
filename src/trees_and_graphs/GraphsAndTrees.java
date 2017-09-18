@@ -56,38 +56,38 @@ public class GraphsAndTrees {
 	
 	/* Returns the root of a Binary Search Tree of minimal height made from
 	 * the given sorted array of distinct integers. */
-	public static TreeNode generateBST(int[] arr) {
+	public static TreeNode<Integer> generateBST(int[] arr) {
 		return generateBST(arr, 0, arr.length);
 	}
 	
 	/* Returns the root of a Binary Search Tree of minimal height made from
 	 * the given sorted array of distinct integers between the given indices.
 	 * Note that 'left' is inclusive, 'right' is exclusive. */
-	private static TreeNode generateBST(int[] arr, int left, int right) {
+	private static TreeNode<Integer> generateBST(int[] arr, int left, int right) {
 		if (left == right) {
 			return null;
 		} else {
 			int middle = left + (right - left) / 2;
-			return new TreeNode(arr[middle], generateBST(arr, left, middle),
+			return new TreeNode<Integer>(arr[middle], generateBST(arr, left, middle),
 											 generateBST(arr, middle + 1, right));
 		}
 	}
 	
 	/* Returns a list of LinkedLists, one LinkedList for each level of
 	 * the tree with given overallRoot filled with the nodes of that level. */
-	public static List<LinkedList<TreeNode>> listsByLevel(TreeNode overallRoot) {
-		List<LinkedList<TreeNode>> result = new ArrayList<>();
+	public static List<LinkedList<TreeNode<Integer>>> listsByLevel(TreeNode<Integer> overallRoot) {
+		List<LinkedList<TreeNode<Integer>>> result = new ArrayList<>();
 		fillListWithNodes(overallRoot, result, 0);
 		return result;
 	}
 	
 	/* Fills the given list of LinkedLists, one LinkedList for each level of the
 	 * tree with given root with given level filled with the nodes of that level.  */
-	private static void fillListWithNodes(TreeNode root, List<LinkedList<TreeNode>> lists,
+	private static void fillListWithNodes(TreeNode<Integer> root, List<LinkedList<TreeNode<Integer>>> lists,
 								   		  int level) {
 		if (root != null) {
 			if (lists.size() == level) {
-				lists.add(new LinkedList<TreeNode>());
+				lists.add(new LinkedList<TreeNode<Integer>>());
 			}
 			lists.get(level).add(root);
 			fillListWithNodes(root.children[0], lists, level + 1);
@@ -97,7 +97,7 @@ public class GraphsAndTrees {
 	
 	/* Returns true if all left and right subtrees in the given tree have
 	 * heights no more than 1 apart and false otherwise. */
-	public static boolean isBalanced(TreeNode overallRoot) {
+	public static boolean isBalanced(TreeNode<Integer> overallRoot) {
 		if (overallRoot == null) {
 			return true;
 		} else {
@@ -111,7 +111,7 @@ public class GraphsAndTrees {
 	
 	/* Returns the height of the tree beginning with the given root.  The empty
 	 * tree is defined to have a height of 0. */
-	private static int getHeight(TreeNode root) {
+	private static int getHeight(TreeNode<Integer> root) {
 		if (root == null) {
 			return 0;
 		} else {
@@ -123,13 +123,13 @@ public class GraphsAndTrees {
 	
 	/* Returns true if the binary tree with given root is a binary search tree
 	 * and false otherwise. The empty tree is a valid binary search tree. */
-	public static boolean isSearchTree(TreeNode overallRoot) {
+	public static boolean isSearchTree(TreeNode<Integer> overallRoot) {
 		return validateSearchTree(overallRoot, Integer.MIN_VALUE, Integer.MAX_VALUE);
 	}
 	
 	/* Returns true if the tree with given root is a binary search tree and contains
 	 * only values between the given min and max inclusive. */
-	private static boolean validateSearchTree(TreeNode root, int min, int max) {
+	private static boolean validateSearchTree(TreeNode<Integer> root, int min, int max) {
 		if (root == null) {
 			return true;
 		} else {
@@ -146,7 +146,7 @@ public class GraphsAndTrees {
 	
 	/* Returns the immediate successor of the given root in the BST in which
 	 * the given root exists.  Returns null if there is no successor. */
-	public TreeNode getSuccessor(TreeNode root) { 
+	public TreeNode<Integer> getSuccessor(TreeNode<Integer> root) { 
 		if (root == null) {
 			return null;
 		}
@@ -157,8 +157,8 @@ public class GraphsAndTrees {
 		} else {
 			// no right subtree -> go up until we were on a left child
 			// or get all the way back to the top of the tree
-			TreeNode parent = root.parent;
-			TreeNode child = root;
+			TreeNode<Integer> parent = root.parent;
+			TreeNode<Integer> child = root;
 			while (parent != null && parent.children[0] != child) {
 				child = parent;
 				parent = child.parent;
@@ -170,8 +170,8 @@ public class GraphsAndTrees {
 	
 	/* Returns the leftmost node in the tree with the given root.  Returns
 	 * null if the given root is null. */
-	private TreeNode getLeftMostNode(TreeNode root) {
-		TreeNode current = root;
+	private TreeNode<Integer> getLeftMostNode(TreeNode<Integer> root) {
+		TreeNode<Integer> current = root;
 		while (current != null && current.children[0] != null) {
 			current = current.children[0];
 		}
