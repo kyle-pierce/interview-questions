@@ -2,7 +2,6 @@ package trees_and_graphs;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
