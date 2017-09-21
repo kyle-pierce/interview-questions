@@ -236,9 +236,72 @@ public class GraphsAndTrees {
 	/* Returns the first common ancestor of firstNode and secondNode in the
 	 * tree with the given root.  The first common ancestor is the branch node
 	 * which contains both firstNode and secondNode in its subtrees and has the
-	 * highest possible depth down the tree. */
-	public TreeNode<Integer> firstCommonAncestor(TreeNode<Integer> root, 
-			TreeNode<Integer> firstNode, TreeNode<Integer> secondNode) {
-		return null;
+	 * highest possible depth down the tree. Returns null if there is no common
+	 * ancestor between the given elements. */
+	public static TreeNode<Integer> firstCommonAncestor(TreeNode<Integer> root, 
+												        int elementOne, int elementTwo) {
+		return findCommonAncestor(root, elementOne, elementTwo).node;
+	}
+	
+	/* Returns a Result object which will indicate the status of the search for the
+	 * given elementOne and elementTwo in the tree with the given root. The Result object
+	 * will contain a null node if the ancestor was not found.  If the ancestor was
+	 * found, the node will be non-null. */
+	private static Result findCommonAncestor(TreeNode<Integer> root, 
+											 int elementOne, int elementTwo) {
+		if (root == null) {
+			// the empty tree does not have an ancestor of any given elements
+			return new Result(null, false, false);
+		} else {
+			/* Check the left subtree for the elements.  If the ancestor was found below this
+			 * node in the left tree, return that Result directly. */
+			Result leftResult = findCommonAncestor(root.children[0], elementOne, elementTwo);
+			if (leftResult.node != null) {
+				return leftResult;
+			}
+			
+			/* Check the right subtree for the elements.  If the ancestor was found below this
+			 * node in the right tree, return that Result directly. */
+			Result rightResult = findCommonAncestor(root.children[1], elementOne, elementTwo);
+			if (rightResult.node != null) {
+				return rightResult;
+			}
+			
+			/* The result was not found in subtrees so we will need to return a new Result
+			 * which is the combination of the results of the left and right subtrees. */
+			
+			// We found elementOne if it was in either subtree or is this current element
+			boolean elementOneFound = leftResult.elementOneFound || 
+									  rightResult.elementOneFound ||
+									  root.data == elementOne;
+			// We found elementTwo if it was in either subtree or is this current element
+			boolean elementTwoFound = leftResult.elementTwoFound || 
+									  rightResult.elementTwoFound ||
+									  root.data == elementTwo;
+			
+			/* If this is the ancestor, the node value should be non-null.  Otherwise
+			 * it should be null to make the conditional logic more clear later. */
+			TreeNode<Integer> nodeValue = (elementOneFound && elementTwoFound) ? root : null;
+			return new Result(nodeValue, elementOneFound, elementTwoFound);
+		}
+	}
+	
+	/* This class is used for the firstCommonAncestor problem.  It stores a node
+	 * value which should be non-null if and only if elementOneFound and elementTwoFound
+	 * are both true.  It allows for more information to be returns from recursive
+	 * calls looking for an ancestor down the tree. */
+	private static class Result {
+		/* Final fields because they should never be changed after the 
+		 * constructor anyway. */
+		public final TreeNode<Integer> node;
+		public final boolean elementOneFound;
+		public final boolean elementTwoFound;
+		
+		/* Construct a result with the given node, elementOneFound, and elementTwoFound. */
+		public Result(TreeNode<Integer> node, boolean elementOneFound, boolean elementTwoFound) {
+			this.node = node;
+			this.elementOneFound = elementOneFound;
+			this.elementTwoFound = elementTwoFound;
+		}
 	}
 }
