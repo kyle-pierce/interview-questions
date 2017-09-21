@@ -232,4 +232,13 @@ public class GraphsAndTrees {
 			buildOrder.add(currentProject);
 		}
 	}
+	
+	/* Returns the first common ancestor of firstNode and secondNode in the
+	 * tree with the given root.  The first common ancestor is the branch node
+	 * which contains both firstNode and secondNode in its subtrees and has the
+	 * highest possible depth down the tree. */
+	public TreeNode<Integer> firstCommonAncestor(TreeNode<Integer> root, 
+			TreeNode<Integer> firstNode, TreeNode<Integer> secondNode) {
+		return null;
+	}
 }
