@@ -186,6 +186,17 @@ public class Tests {
 		}
 	}
 	
+	@Test
+	public void testFirstCommonAncestor() {
+		// note: tested with a BST but the code does not expect a BST
+		TreeNode<Integer> root = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5, 6, 7});
+		
+		assertSame(2, GraphsAndTrees.firstCommonAncestor(root, 1, 3).data);
+		assertSame(null, GraphsAndTrees.firstCommonAncestor(root, 1, 8));
+		assertSame(4, GraphsAndTrees.firstCommonAncestor(root, 1, 4).data);
+		assertSame(4, GraphsAndTrees.firstCommonAncestor(root, 1, 7).data);
+	}
+	
 	/* Returns true if the two trees with the given roots are equal,
 	 * meaning they have the exact same nodes in the exact same
 	 * locations.  Assumes the two trees have the same number of
