@@ -181,7 +181,7 @@ public class GraphsAndTrees {
 	/* Given the list of projects and dependencies, returns a project order in which
 	 * no projects appear before those on which they depend. Assumes there are no
 	 * projects with identical names. */
-	public List<String> buildOrder(List<String> projects, List<Pair> dependencies) {
+	public static List<String> buildOrder(List<String> projects, List<Pair> dependencies) {
 		AdjacencyList<String> graph = new AdjacencyList<>();	// dependency graph
 		List<String> buildOrder = new ArrayList<>();			// store the build order
 		
@@ -215,10 +215,12 @@ public class GraphsAndTrees {
 	/* Adds the given currentProject to the given buildOrder in such a way that all the of
 	 * projects in the given dependencies which must be completed first are done so. Ensures
 	 * no projects are planned for completion multiple times using the given handledProjects. */
-	private void addBuildOrder(List<String> buildOrder, AdjacencyList<String> dependencies,
-							   Set<String> handledProjects, String currentProject) {
+	private static void addBuildOrder(List<String> buildOrder, AdjacencyList<String> dependencies,
+							   		  Set<String> handledProjects, String currentProject) {
 		if (!handledProjects.contains(currentProject)) {
-			// the project has not been handled
+			// the project has not been handled, handle it
+			handledProjects.add(currentProject);
+			
 			if (dependencies.getChildren(currentProject).size() > 0) {
 				// children are projects which must be completed first, so we
 				// loop through the children and create their build orders
@@ -227,14 +229,7 @@ public class GraphsAndTrees {
 				}
 			}
 			// finally add the current project in its safe location
-			handledProjects.add(currentProject);
+			buildOrder.add(currentProject);
 		}
 	}
-	
-	/* Represents a pair of projects; 'from' must be completed before 'to'. */
-	private static class Pair {
-		public String from;
-		public String to;
-	}
-	
 }

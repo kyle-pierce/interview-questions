@@ -4,6 +4,7 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -139,6 +140,50 @@ public class Tests {
 		
 		overallRoot.data = 42;
 		assertFalse(GraphsAndTrees.isSearchTree(overallRoot));
+	}
+	
+	@Test
+	public void testBuildOrder() {
+		List<String> firstProjects = 
+				Arrays.asList(new String[] {"1", "2", "3", "4"});
+		List<String> secondProjects = 
+				Arrays.asList(new String[] {"1.0", "1.1", "2.0", "2.1", "3.0"});
+		List<String> thirdProjects = 
+				Arrays.asList(new String[] {"2.1", "1.1", "3.0", "1.0", "2.0"});
+		
+		List<Pair> firstPairs = new ArrayList<>();
+		firstPairs.add(new Pair("1", "2"));
+		firstPairs.add(new Pair("2", "3"));
+		firstPairs.add(new Pair("3", "4"));
+		
+		List<Pair> secondPairs = new ArrayList<>();
+		secondPairs.add(new Pair("1.0", "2.0"));
+		secondPairs.add(new Pair("1.1", "2.0"));
+		secondPairs.add(new Pair("1.0", "2.1"));
+		secondPairs.add(new Pair("1.1", "2.1"));
+		secondPairs.add(new Pair("2.0", "3.0"));
+		secondPairs.add(new Pair("2.1", "3.0"));
+		
+		
+		List<String> firstBuildOrder = GraphsAndTrees.buildOrder(firstProjects, firstPairs);
+		verifyBuildOrder(firstProjects, firstPairs, firstBuildOrder);
+		
+		List<String> secondBuildOrder = GraphsAndTrees.buildOrder(secondProjects, secondPairs);
+		verifyBuildOrder(secondProjects, secondPairs, secondBuildOrder);
+		
+		List<String> thirdBuildOrder = GraphsAndTrees.buildOrder(thirdProjects, secondPairs);
+		verifyBuildOrder(thirdProjects, secondPairs, thirdBuildOrder);
+	}
+	
+	/* Verifies that the provided build order is a valid for the given projects
+	 * and dependencies. */
+	private void verifyBuildOrder(List<String> projects, List<Pair> dependencies, 
+								  List<String> order) {
+		assertSame(projects.size(), order.size());
+		assertTrue(order.containsAll(projects));
+		for (Pair pair : dependencies) {
+			assertTrue(order.indexOf(pair.from) < order.indexOf(pair.to));
+		}
 	}
 	
 	/* Returns true if the two trees with the given roots are equal,
