@@ -247,8 +247,8 @@ public class GraphsAndTrees {
 	 * given elementOne and elementTwo in the tree with the given root. The Result object
 	 * will contain a null node if the ancestor was not found.  If the ancestor was
 	 * found, the node will be non-null. */
-	private static Result findCommonAncestor(TreeNode<Integer> root, 
-											 int elementOne, int elementTwo) {
+	private static Result findCommonAncestor(TreeNode<Integer> root, int elementOne, 
+																	 int elementTwo) {
 		if (root == null) {
 			// the empty tree does not have an ancestor of any given elements
 			return new Result(null, false, false);
@@ -271,11 +271,11 @@ public class GraphsAndTrees {
 			 * which is the combination of the results of the left and right subtrees. */
 			
 			// We found elementOne if it was in either subtree or is this current element
-			boolean elementOneFound = leftResult.elementOneFound || 
+			boolean elementOneFound = leftResult.elementOneFound  || 
 									  rightResult.elementOneFound ||
 									  root.data == elementOne;
 			// We found elementTwo if it was in either subtree or is this current element
-			boolean elementTwoFound = leftResult.elementTwoFound || 
+			boolean elementTwoFound = leftResult.elementTwoFound  || 
 									  rightResult.elementTwoFound ||
 									  root.data == elementTwo;
 			
