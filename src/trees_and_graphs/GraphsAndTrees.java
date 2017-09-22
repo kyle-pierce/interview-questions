@@ -309,28 +309,71 @@ public class GraphsAndTrees {
 	 * an array of distinct integers in order, prints all possible arrays which
 	 * would produce this binary search tree. */
 	public static void possibleBSTSequences(TreeNode<Integer> root) {
-		int size = getSizeOfTree(root);
-		printSequences(root, new ArrayList<Integer>(), size);
-	}
-	
-	/* Returns the size of the given tree. The empty tree has size of 0. */
-	private static int getSizeOfTree(TreeNode<Integer> root) {
-		if (root == null) {
-			return 0;
-		} else {
-			return 1 + getSizeOfTree(root.children[0]) + getSizeOfTree(root.children[1]);
-		}
-	}
-	
-	private static void printSequences(TreeNode<Integer> root, List<Integer> sequence, 
-									   int nodesRemaining) {
-		if (nodesRemaining == 0) {
+		List<List<Integer>> sequences = getSequences(root);
+		for (List<Integer> sequence : sequences) {
 			System.out.println(sequence);
-		} else if (root != null) {
-			sequence.add(root.data);
-			
-			
 		}
 	}
-
+	
+	/* Returns a list of all possible sequences of integers which could have
+	 * produced the tree with the given root. */
+	private static List<List<Integer>> getSequences(TreeNode<Integer> root) {
+		List<List<Integer>> sequences = new ArrayList<>();
+		
+		if (root == null) {		// empty -> only the empty sequence
+			sequences.add(new LinkedList<Integer>());
+		} else {				// nonempty -> combine left and right sequences
+			List<List<Integer>> leftSequences = getSequences(root.children[0]);
+			List<List<Integer>> rightSequences = getSequences(root.children[1]);
+			
+			// add the current node's data to the current sequence
+			List<Integer> currentSequence = new LinkedList<>();
+			currentSequence.add(root.data);
+			
+			// loop through all found sequences and combine them
+			for (List<Integer> left : leftSequences) {
+				for (List<Integer> right : rightSequences) {
+					List<List<Integer>> weavedSequences = new ArrayList<>();
+					weaveSequences(left, right, weavedSequences, currentSequence);
+					sequences.addAll(weavedSequences);
+				}
+			}
+		}
+		
+		return sequences;
+	}
+	
+	/* Given two lists, weaved them in all possible orders with the given currentSequence
+	 * and adds these weaved lists to the given weavedSequences. */
+	private static void weaveSequences(List<Integer> left, List<Integer> right,
+									   List<List<Integer>> weavedSequences, 
+									   List<Integer> currentSequence) {
+		if (left.size() == 0 || right.size() == 0) {
+			// make a copy to avoid reference-related bugs
+			List<Integer> result = new LinkedList<Integer>(currentSequence);
+			
+			// only one of these will be nonempty but there is no need to check which
+			result.addAll(left);
+			result.addAll(right);
+			
+			// add the combined result to the list of sequences being passed around
+			weavedSequences.add(result);
+		} else {
+			/* Remove the front of the left list.  Add it to the back of the current sequence.
+			 * Find all sequences after making this change.  Completely undo this change. */
+			int headOfLeft = left.remove(0);
+			currentSequence.add(headOfLeft);
+			weaveSequences(left, right, weavedSequences, currentSequence);
+			currentSequence.remove(currentSequence.size() - 1);
+			left.add(0, headOfLeft);
+			
+			/* Remove the front of the right list.  Add it to the back of the current sequence.
+			 * Find all sequences after making this change.  Completely undo this change. */
+			int headOfRight = right.remove(0);
+			currentSequence.add(headOfRight);
+			weaveSequences(left, right, weavedSequences, currentSequence);
+			currentSequence.remove(currentSequence.size() - 1);
+			right.add(0, headOfRight);
+		}
+	}
 }
