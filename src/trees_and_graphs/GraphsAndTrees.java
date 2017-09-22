@@ -304,4 +304,33 @@ public class GraphsAndTrees {
 			this.elementTwoFound = elementTwoFound;
 		}
 	}
+	
+	/* Given the root of a binary search tree formed by inserting all elements from
+	 * an array of distinct integers in order, prints all possible arrays which
+	 * would produce this binary search tree. */
+	public static void possibleBSTSequences(TreeNode<Integer> root) {
+		int size = getSizeOfTree(root);
+		printSequences(root, new ArrayList<Integer>(), size);
+	}
+	
+	/* Returns the size of the given tree. The empty tree has size of 0. */
+	private static int getSizeOfTree(TreeNode<Integer> root) {
+		if (root == null) {
+			return 0;
+		} else {
+			return 1 + getSizeOfTree(root.children[0]) + getSizeOfTree(root.children[1]);
+		}
+	}
+	
+	private static void printSequences(TreeNode<Integer> root, List<Integer> sequence, 
+									   int nodesRemaining) {
+		if (nodesRemaining == 0) {
+			System.out.println(sequence);
+		} else if (root != null) {
+			sequence.add(root.data);
+			
+			
+		}
+	}
+
 }
