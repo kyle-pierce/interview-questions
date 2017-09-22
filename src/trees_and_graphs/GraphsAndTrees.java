@@ -308,7 +308,7 @@ public class GraphsAndTrees {
 	/* Given the root of a binary search tree formed by inserting all elements from
 	 * an array of distinct integers in order, prints all possible arrays which
 	 * would produce this binary search tree. */
-	public static void possibleBSTSequences(TreeNode<Integer> root) {
+	public static void printBSTSequences(TreeNode<Integer> root) {
 		List<List<Integer>> sequences = getSequences(root);
 		for (List<Integer> sequence : sequences) {
 			System.out.println(sequence);
@@ -317,7 +317,7 @@ public class GraphsAndTrees {
 	
 	/* Returns a list of all possible sequences of integers which could have
 	 * produced the tree with the given root. */
-	private static List<List<Integer>> getSequences(TreeNode<Integer> root) {
+	public static List<List<Integer>> getSequences(TreeNode<Integer> root) {
 		List<List<Integer>> sequences = new ArrayList<>();
 		
 		if (root == null) {		// empty -> only the empty sequence

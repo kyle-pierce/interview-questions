@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Tests {
 	
@@ -195,6 +196,54 @@ public class Tests {
 		assertSame(null, GraphsAndTrees.firstCommonAncestor(root, 1, 8));
 		assertSame(4, GraphsAndTrees.firstCommonAncestor(root, 1, 4).data);
 		assertSame(4, GraphsAndTrees.firstCommonAncestor(root, 1, 7).data);
+	}
+	
+	@Test
+	public void testGetBSTSequences() {
+		int[] baseSequence = {1, 2, 3, 4, 5, 6, 7, 8};
+		TreeNode<Integer> initialTree = GraphsAndTrees.generateBST(baseSequence);
+		List<List<Integer>> sequences = GraphsAndTrees.getSequences(initialTree);
+		
+		for (List<Integer> sequence : sequences) {
+			int[] arraySequence = new int[sequence.size()];
+			
+			for (int i = 0; i < arraySequence.length; i++) {
+				arraySequence[i] = sequence.get(i);
+			}
+			
+			TreeNode<Integer> currentTree = buildBST(arraySequence);
+			
+			assertTrue(treesAreEqual(initialTree, currentTree));
+		}
+	}
+	
+	/* Builds and returns a valid binary search tree created by inserting all elements
+	 * in the given arraySequence in order from left to right. */
+	private TreeNode<Integer> buildBST(int[] arraySequence) {
+		TreeNode<Integer> root = null;
+		
+		if (arraySequence.length > 0) {
+			for (int i = 0; i < arraySequence.length; i++) {
+				root = searchTreeAdd(root, arraySequence[i]);
+			}
+		}
+		
+		return root;
+	}
+	
+	/* Adds the given value into the tree with the given root in the correct
+	 * location for a binary search tree. Returns the updated root. */
+	private TreeNode<Integer> searchTreeAdd(TreeNode<Integer> root, int value) {
+		if (root == null) {
+			root = new TreeNode<Integer>(value);
+		} else {
+			if (root.data >= value) {
+				root.children[0] = searchTreeAdd(root.children[0], value);
+			} else {
+				root.children[1] = searchTreeAdd(root.children[1], value);
+			}
+		}
+		return root;
 	}
 	
 	/* Returns true if the two trees with the given roots are equal,
