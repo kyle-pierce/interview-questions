@@ -199,7 +199,26 @@ public class Tests {
 	}
 	
 	@Test
-	public void testGetBSTSequences() {
+	public void testGetBSTSequencesBalanced() {
+		int[] baseSequence = {1, 2, 3, 4, 5, 6, 7};
+		TreeNode<Integer> initialTree = GraphsAndTrees.generateBST(baseSequence);
+		List<List<Integer>> sequences = GraphsAndTrees.getSequences(initialTree);
+		
+		for (List<Integer> sequence : sequences) {
+			int[] arraySequence = new int[sequence.size()];
+			
+			for (int i = 0; i < arraySequence.length; i++) {
+				arraySequence[i] = sequence.get(i);
+			}
+			
+			TreeNode<Integer> currentTree = buildBST(arraySequence);
+			
+			assertTrue(treesAreEqual(initialTree, currentTree));
+		}
+	}
+	
+	@Test
+	public void testGetBSTSequencesUnbalanced() {
 		int[] baseSequence = {1, 2, 3, 4, 5, 6, 7, 8};
 		TreeNode<Integer> initialTree = GraphsAndTrees.generateBST(baseSequence);
 		List<List<Integer>> sequences = GraphsAndTrees.getSequences(initialTree);
