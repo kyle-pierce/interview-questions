@@ -28,8 +28,8 @@ public class Tests {
 		graph.addChild(src, intermediate);
 		graph.addChild(intermediate, dst);
 		
-		assertTrue(GraphsAndTrees.pathBetweenNodesBFS(graph, src, dst));
-		assertFalse(GraphsAndTrees.pathBetweenNodesBFS(graph, src, unConnected));
+		assertTrue(Graphs.pathBetweenNodesBFS(graph, src, dst));
+		assertFalse(Graphs.pathBetweenNodesBFS(graph, src, unConnected));
 	}
 	
 	@Test
@@ -48,32 +48,32 @@ public class Tests {
 		graph.addChild(src, intermediate);
 		graph.addChild(intermediate, dst);
 		
-		assertTrue(GraphsAndTrees.pathBetweenNodesDFS(graph, src, dst));
-		assertFalse(GraphsAndTrees.pathBetweenNodesDFS(graph, src, unConnected));
+		assertTrue(Graphs.pathBetweenNodesDFS(graph, src, dst));
+		assertFalse(Graphs.pathBetweenNodesDFS(graph, src, unConnected));
 	}
 	
 	@Test
 	public void testGenerateBSTFull() {
 		int[] arr = {1, 2, 3, 4, 5, 6, 7};
-		TreeNode<Integer> observed = GraphsAndTrees.generateBST(arr);
+		TreeNode<Integer> observed = Trees.generateBST(arr);
 		
-		assertTrue(GraphsAndTrees.isBalanced(observed));
-		assertTrue(GraphsAndTrees.isSearchTree(observed));
+		assertTrue(Trees.isBalanced(observed));
+		assertTrue(Trees.isSearchTree(observed));
 	}
 	
 	@Test
 	public void testGenerateBSTNonFull() {
 		int[] arr = {1, 2, 3, 4, 5, 7};
-		TreeNode<Integer> observed = GraphsAndTrees.generateBST(arr);
+		TreeNode<Integer> observed = Trees.generateBST(arr);
 		
-		assertTrue(GraphsAndTrees.isBalanced(observed));
-		assertTrue(GraphsAndTrees.isSearchTree(observed));
+		assertTrue(Trees.isBalanced(observed));
+		assertTrue(Trees.isSearchTree(observed));
 	}
 	
 	@Test
 	public void testListsByLevel() {
-		TreeNode<Integer> overallRoot = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5, 6, 7});
-		List<LinkedList<TreeNode<Integer>>> lists = GraphsAndTrees.listsByLevel(overallRoot);
+		TreeNode<Integer> overallRoot = Trees.generateBST(new int[] {1, 2, 3, 4, 5, 6, 7});
+		List<LinkedList<TreeNode<Integer>>> lists = Trees.listsByLevel(overallRoot);
 		
 		TreeNode<Integer> one = new TreeNode<Integer>(1);
 		TreeNode<Integer> two = new TreeNode<Integer>(2);
@@ -92,26 +92,26 @@ public class Tests {
 	@Test
 	public void testIsBalancedTrue() {
 		TreeNode<Integer> root = null;
-		assertTrue(GraphsAndTrees.isBalanced(root));
+		assertTrue(Trees.isBalanced(root));
 		
 		root = new TreeNode<Integer>(2);
-		assertTrue(GraphsAndTrees.isBalanced(root));
+		assertTrue(Trees.isBalanced(root));
 		
 		root.children[0] = new TreeNode<Integer>(1);
 		root.children[1] = new TreeNode<Integer>(3);
-		assertTrue(GraphsAndTrees.isBalanced(root));
+		assertTrue(Trees.isBalanced(root));
 		
 		root.children[0].children[0] = new TreeNode<Integer>(4);
-		assertTrue(GraphsAndTrees.isBalanced(root));
+		assertTrue(Trees.isBalanced(root));
 		
 		root.children[1].children[1] = new TreeNode<Integer>(7);
-		assertTrue(GraphsAndTrees.isBalanced(root));
+		assertTrue(Trees.isBalanced(root));
 		
 		root.children[0].children[1] = new TreeNode<Integer>(5);
-		assertTrue(GraphsAndTrees.isBalanced(root));
+		assertTrue(Trees.isBalanced(root));
 		
 		root.children[1].children[0] = new TreeNode<Integer>(6);
-		assertTrue(GraphsAndTrees.isBalanced(root));
+		assertTrue(Trees.isBalanced(root));
 	}
 	
 	@Test
@@ -119,28 +119,28 @@ public class Tests {
 		TreeNode<Integer> root = new TreeNode<Integer>(0);
 		root.children[0] = new TreeNode<Integer>(1);
 		root.children[0].children[0] = new TreeNode<Integer>(2);
-		assertFalse(GraphsAndTrees.isBalanced(root));
+		assertFalse(Trees.isBalanced(root));
 		
 		root.children[0].children[1] = new TreeNode<Integer>(3);
-		assertFalse(GraphsAndTrees.isBalanced(root));
+		assertFalse(Trees.isBalanced(root));
 		
 		root.children[0].children[0].children[0] = new TreeNode<Integer>(4);
-		assertFalse(GraphsAndTrees.isBalanced(root));
+		assertFalse(Trees.isBalanced(root));
 	}
 	
 	@Test
 	public void testIsSearchTree() {
-		TreeNode<Integer> overallRoot = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5});
-		assertTrue(GraphsAndTrees.isSearchTree(overallRoot));
+		TreeNode<Integer> overallRoot = Trees.generateBST(new int[] {1, 2, 3, 4, 5});
+		assertTrue(Trees.isSearchTree(overallRoot));
 		
 		overallRoot.children[0].children[0].data = -1;
-		assertTrue(GraphsAndTrees.isSearchTree(overallRoot));
+		assertTrue(Trees.isSearchTree(overallRoot));
 		
 		overallRoot.children[1].children[1] = new TreeNode<Integer>(100);
-		assertTrue(GraphsAndTrees.isSearchTree(overallRoot));
+		assertTrue(Trees.isSearchTree(overallRoot));
 		
 		overallRoot.data = 42;
-		assertFalse(GraphsAndTrees.isSearchTree(overallRoot));
+		assertFalse(Trees.isSearchTree(overallRoot));
 	}
 	
 	@Test
@@ -166,13 +166,13 @@ public class Tests {
 		secondPairs.add(new Pair("2.1", "3.0"));
 		
 		
-		List<String> firstBuildOrder = GraphsAndTrees.buildOrder(firstProjects, firstPairs);
+		List<String> firstBuildOrder = Graphs.buildOrder(firstProjects, firstPairs);
 		verifyBuildOrder(firstProjects, firstPairs, firstBuildOrder);
 		
-		List<String> secondBuildOrder = GraphsAndTrees.buildOrder(secondProjects, secondPairs);
+		List<String> secondBuildOrder = Graphs.buildOrder(secondProjects, secondPairs);
 		verifyBuildOrder(secondProjects, secondPairs, secondBuildOrder);
 		
-		List<String> thirdBuildOrder = GraphsAndTrees.buildOrder(thirdProjects, secondPairs);
+		List<String> thirdBuildOrder = Graphs.buildOrder(thirdProjects, secondPairs);
 		verifyBuildOrder(thirdProjects, secondPairs, thirdBuildOrder);
 	}
 	
@@ -190,19 +190,19 @@ public class Tests {
 	@Test
 	public void testFirstCommonAncestor() {
 		// note: tested with a BST but the code does not expect a BST
-		TreeNode<Integer> root = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5, 6, 7});
+		TreeNode<Integer> root = Trees.generateBST(new int[] {1, 2, 3, 4, 5, 6, 7});
 		
-		assertSame(2, GraphsAndTrees.firstCommonAncestor(root, 1, 3).data);
-		assertSame(null, GraphsAndTrees.firstCommonAncestor(root, 1, 8));
-		assertSame(4, GraphsAndTrees.firstCommonAncestor(root, 1, 4).data);
-		assertSame(4, GraphsAndTrees.firstCommonAncestor(root, 1, 7).data);
+		assertSame(2, Trees.firstCommonAncestor(root, 1, 3).data);
+		assertSame(null, Trees.firstCommonAncestor(root, 1, 8));
+		assertSame(4, Trees.firstCommonAncestor(root, 1, 4).data);
+		assertSame(4, Trees.firstCommonAncestor(root, 1, 7).data);
 	}
 	
 	@Test
 	public void testGetBSTSequencesBalanced() {
 		int[] baseSequence = {1, 2, 3, 4, 5, 6, 7};
-		TreeNode<Integer> initialTree = GraphsAndTrees.generateBST(baseSequence);
-		List<List<Integer>> sequences = GraphsAndTrees.getSequences(initialTree);
+		TreeNode<Integer> initialTree = Trees.generateBST(baseSequence);
+		List<List<Integer>> sequences = Trees.getSequences(initialTree);
 		
 		for (List<Integer> sequence : sequences) {
 			int[] arraySequence = new int[sequence.size()];
@@ -219,8 +219,8 @@ public class Tests {
 	@Test
 	public void testGetBSTSequencesUnbalanced() {
 		int[] baseSequence = {1, 2, 3, 4, 5, 6, 7, 8};
-		TreeNode<Integer> initialTree = GraphsAndTrees.generateBST(baseSequence);
-		List<List<Integer>> sequences = GraphsAndTrees.getSequences(initialTree);
+		TreeNode<Integer> initialTree = Trees.generateBST(baseSequence);
+		List<List<Integer>> sequences = Trees.getSequences(initialTree);
 		
 		for (List<Integer> sequence : sequences) {
 			int[] arraySequence = new int[sequence.size()];
@@ -236,41 +236,41 @@ public class Tests {
 	
 	@Test
 	public void testContainsBothNull() {
-		assertTrue(GraphsAndTrees.contains(null, null));
+		assertTrue(Trees.contains(null, null));
 	}
 	
 	@Test
 	public void testContainsOneNull() {
-		assertTrue(GraphsAndTrees.contains(new TreeNode<Integer>(42), null));
-		assertFalse(GraphsAndTrees.contains(null, new TreeNode<Integer>(42)));
+		assertTrue(Trees.contains(new TreeNode<Integer>(42), null));
+		assertFalse(Trees.contains(null, new TreeNode<Integer>(42)));
 	}
 	
 	@Test
 	public void testContainsNonNullTreesAreContained() {
-		TreeNode<Integer> outer = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5, 6, 7});
+		TreeNode<Integer> outer = Trees.generateBST(new int[] {1, 2, 3, 4, 5, 6, 7});
 		TreeNode<Integer> innerOne = outer;
-		TreeNode<Integer> innerTwo = GraphsAndTrees.generateBST(new int[] {1, 2, 3});
-		TreeNode<Integer> innerThree = GraphsAndTrees.generateBST(new int[] {5, 6, 7});
-		TreeNode<Integer> innerFour = GraphsAndTrees.generateBST(new int[] {2, 4, 6});
+		TreeNode<Integer> innerTwo = Trees.generateBST(new int[] {1, 2, 3});
+		TreeNode<Integer> innerThree = Trees.generateBST(new int[] {5, 6, 7});
+		TreeNode<Integer> innerFour = Trees.generateBST(new int[] {2, 4, 6});
 		TreeNode<Integer> innerFive = new TreeNode<Integer>(1);
 		
-		assertTrue(GraphsAndTrees.contains(outer, innerOne));
-		assertTrue(GraphsAndTrees.contains(outer, innerTwo));
-		assertTrue(GraphsAndTrees.contains(outer, innerThree));
-		assertTrue(GraphsAndTrees.contains(outer, innerFour));
-		assertTrue(GraphsAndTrees.contains(outer, innerFive));
+		assertTrue(Trees.contains(outer, innerOne));
+		assertTrue(Trees.contains(outer, innerTwo));
+		assertTrue(Trees.contains(outer, innerThree));
+		assertTrue(Trees.contains(outer, innerFour));
+		assertTrue(Trees.contains(outer, innerFive));
 	}
 	
 	@Test
 	public void testContainsNonNullTreesNotContained() {
-		TreeNode<Integer> outer = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5});
+		TreeNode<Integer> outer = Trees.generateBST(new int[] {1, 2, 3, 4, 5});
 		TreeNode<Integer> innerOne = new TreeNode<Integer>(6);
-		TreeNode<Integer> innerTwo = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5, 6});
-		TreeNode<Integer> innerThree = GraphsAndTrees.generateBST(new int[] {0, 1, 2});
+		TreeNode<Integer> innerTwo = Trees.generateBST(new int[] {1, 2, 3, 4, 5, 6});
+		TreeNode<Integer> innerThree = Trees.generateBST(new int[] {0, 1, 2});
 		
-		assertFalse(GraphsAndTrees.contains(outer, innerOne));
-		assertFalse(GraphsAndTrees.contains(outer, innerTwo));
-		assertFalse(GraphsAndTrees.contains(outer, innerThree));
+		assertFalse(Trees.contains(outer, innerOne));
+		assertFalse(Trees.contains(outer, innerTwo));
+		assertFalse(Trees.contains(outer, innerThree));
 	}
 	
 	/* Builds and returns a valid binary search tree created by inserting all elements
