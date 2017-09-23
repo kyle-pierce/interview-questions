@@ -20,6 +20,13 @@ public class TreeNode<E> {
 	public TreeNode<E> parent;
 	
 	/**
+	 * Constructs an empty TreeNode.
+	 */
+	public TreeNode() {
+		this(null, null, null, null);
+	}
+	
+	/**
 	 * Constructs a new TreeNode with the given data.
 	 * 
 	 * @param data data to be stored in this node

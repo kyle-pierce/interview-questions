@@ -2,6 +2,7 @@ package trees_and_graphs;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 public class RandomBinaryTree<E> {
 	private int size;
@@ -104,6 +105,48 @@ public class RandomBinaryTree<E> {
 				return contains(root.children[0], element) ||
 					   contains(root.children[1], element);
 			}
+		}
+	}
+	
+	/**
+	 * Returns a random element from this tree.
+	 * 
+	 * @return a random element from this tree
+	 */
+	public E getRandomElement() {
+		int index = new Random().nextInt(size);
+		return get(overallRoot, index).elementFound;
+	}
+	
+	/* Returns a Result object storing both an element and the number of nodes
+	 * traversed in the recursive call.  The element will be non null only if 
+	 * the element at the given index was found. */
+	private Result get(TreeNode<E> root, int index) {
+		Result result;
+		if (index == 0) {
+			result = new Result();
+			result.elementFound = root.data;
+			result.nodesTraversed = 1;
+		} else {
+			Result leftResult = get(root.children[0], index - 1);
+			if (leftResult.elementFound != null) {
+				result = leftResult;
+			} else {
+				result = get(root.children[1], index - 1 - leftResult.nodesTraversed);
+			}
+		}
+		return result;
+	}
+	
+	/* Holds the result needed for getting a random element from this tree. */
+	private class Result {
+		public int nodesTraversed;
+		public E elementFound;
+		
+		/* Constructs a new, empty Result object. */
+		public Result() {
+			nodesTraversed = 0;
+			elementFound = null;
 		}
 	}
 }
