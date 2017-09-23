@@ -376,4 +376,24 @@ public class GraphsAndTrees {
 			right.add(0, headOfRight);
 		}
 	}
+	
+	/* Returns true if the given inner tree is a subtree of the given outer tree. */
+	public static <E> boolean contains(TreeNode<E> outer, TreeNode<E> inner) {
+		return treesAreEqual(outer, inner) || 
+				contains(outer.children[0], inner) ||
+				contains(outer.children[1], inner);
+	}
+	
+	/* Returns true if the trees with the given roots are equal.  Two trees
+	 * are equal iff they contain the same nodes with the same data in each
+	 * location. */
+	private static <E> boolean treesAreEqual(TreeNode<E> one, TreeNode<E> two) {
+		if (one == null || two == null) {
+			return one == two;
+		} else {
+			return one.data.equals(two.data) &&
+					treesAreEqual(one.children[0], two.children[0]) &&
+					treesAreEqual(one.children[1], two.children[1]);
+		}
+	}
 }
