@@ -379,21 +379,32 @@ public class GraphsAndTrees {
 	
 	/* Returns true if the given inner tree is a subtree of the given outer tree. */
 	public static <E> boolean contains(TreeNode<E> outer, TreeNode<E> inner) {
-		return treesAreEqual(outer, inner) || 
-				contains(outer.children[0], inner) ||
-				contains(outer.children[1], inner);
+		/* Possible signs of containment:
+		 * 	1) inner is a subtree of outer starting at the roots
+		 *  2) outer's left subtree contains inner 
+		 *  3) outer's right subtree contains inner 
+		 *  
+		 *  note: must ensure outer is non-null before checking subtrees */
+		return isSubtree(outer, inner) || outer != null &&
+				(contains(outer.children[0], inner) ||
+				 contains(outer.children[1], inner));
 	}
 	
-	/* Returns true if the trees with the given roots are equal.  Two trees
-	 * are equal iff they contain the same nodes with the same data in each
-	 * location. */
-	private static <E> boolean treesAreEqual(TreeNode<E> one, TreeNode<E> two) {
-		if (one == null || two == null) {
-			return one == two;
+	/* Returns true if the tree with the given two root is a subtree
+	 * of the tree with the given one root. */
+	private static <E> boolean isSubtree(TreeNode<E> one, TreeNode<E> two) {
+		if (two == null) {
+			/* The empty tree is a subtree of any given tree */
+			return true;
+		} else if (one == null) {
+			/* The non-empty tree cannot be a subtree of the empty tree */
+			return false;
 		} else {
+			/* If neither are empty, compare the current nodes as well as
+			 * the left and right subtrees. */
 			return one.data.equals(two.data) &&
-					treesAreEqual(one.children[0], two.children[0]) &&
-					treesAreEqual(one.children[1], two.children[1]);
+					isSubtree(one.children[0], two.children[0]) &&
+					isSubtree(one.children[1], two.children[1]);
 		}
 	}
 }

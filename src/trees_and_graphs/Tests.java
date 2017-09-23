@@ -212,7 +212,6 @@ public class Tests {
 			}
 			
 			TreeNode<Integer> currentTree = buildBST(arraySequence);
-			
 			assertTrue(treesAreEqual(initialTree, currentTree));
 		}
 	}
@@ -231,9 +230,33 @@ public class Tests {
 			}
 			
 			TreeNode<Integer> currentTree = buildBST(arraySequence);
-			
 			assertTrue(treesAreEqual(initialTree, currentTree));
 		}
+	}
+	
+	@Test
+	public void testContainsBothNull() {
+		assertTrue(GraphsAndTrees.contains(null, null));
+	}
+	
+	@Test
+	public void testContainsOneNull() {
+		assertTrue(GraphsAndTrees.contains(new TreeNode<Integer>(42), null));
+		assertFalse(GraphsAndTrees.contains(null, new TreeNode<Integer>(42)));
+	}
+	
+	@Test
+	public void testContainsNonNullTreesAreContained() {
+		TreeNode<Integer> outer = GraphsAndTrees.generateBST(new int[] {1, 2, 3, 4, 5, 6, 7});
+		TreeNode<Integer> innerOne = outer;
+		TreeNode<Integer> innerTwo = GraphsAndTrees.generateBST(new int[] {1, 2, 3});
+		TreeNode<Integer> innerThree = GraphsAndTrees.generateBST(new int[] {5, 6, 7});
+		TreeNode<Integer> innerFour = GraphsAndTrees.generateBST(new int[] {2, 4, 6});
+		
+		assertTrue(GraphsAndTrees.contains(outer, innerOne));
+		assertTrue(GraphsAndTrees.contains(outer, innerTwo));
+		assertTrue(GraphsAndTrees.contains(outer, innerThree));
+		assertTrue(GraphsAndTrees.contains(outer, innerFour));
 	}
 	
 	/* Builds and returns a valid binary search tree created by inserting all elements
