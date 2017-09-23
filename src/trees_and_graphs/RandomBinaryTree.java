@@ -72,6 +72,7 @@ public class RandomBinaryTree<E> {
 				} else {
 					root = root.children[1];
 				}
+				--size;
 				remove(root, element);
 			} else {
 				root.children[0] = remove(root.children[0], element);
