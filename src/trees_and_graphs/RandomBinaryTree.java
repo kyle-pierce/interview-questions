@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class RandomBinaryTree<E> {
 	private int size;
-	private TreeNode<E> overallRoot;
+	private RandomTreeNode<E> overallRoot;
 	
 	/**
 	 * Constructs an empty RandomBinaryTree
@@ -23,32 +23,12 @@ public class RandomBinaryTree<E> {
 	 * @param element element to be added to this tree
 	 */
 	public void add(E element) {
-		if (overallRoot == null) {
-			overallRoot = new TreeNode<E>(element);
-		} else {
-			Queue<TreeNode<E>> currentLevel = new LinkedList<>();
-			Queue<TreeNode<E>> nextLevel = new LinkedList<>();
-			
-			currentLevel.add(overallRoot);
-			boolean inserted = false;
-			
-			while (!inserted) {
-				while (!currentLevel.isEmpty() && !inserted) {
-					TreeNode<E> current = currentLevel.remove();
-					if (current.children[0] == null) {
-						current.children[0] = new TreeNode<E>(element);
-						inserted = true;
-					} else if (current.children[1] == null) {
-						current.children[1] = new TreeNode<E>(element);
-						inserted = true;
-					} else {
-						nextLevel.add(current.children[0]);
-						nextLevel.add(current.children[1]);
-					}
-				}
-				currentLevel = nextLevel;
-			}
-			++size;
+		overallRoot = add(overallRoot, element);
+	}
+	
+	private RandomTreeNode<E> add(RandomTreeNode<E> root, E element) {
+		if (root != null) {
+			if (root.index == size)
 		}
 	}
 	
@@ -65,22 +45,8 @@ public class RandomBinaryTree<E> {
 	
 	/* Removes all occurrences of the given element from the tree with the
 	 * given root, returning the updated root. */
-	private TreeNode<E> remove(TreeNode<E> root, E element) {
-		if (root != null) {
-			if (root.data.equals(element)) {
-				if (root.children[0] != null) {
-					root = root.children[0];
-				} else {
-					root = root.children[1];
-				}
-				--size;
-				remove(root, element);
-			} else {
-				root.children[0] = remove(root.children[0], element);
-				root.children[1] = remove(root.children[1], element);
-			}
-		}
-		return root;
+	private RandomTreeNode<E> remove(RandomTreeNode<E> root, E element) {
+		
 	}
 	
 	/**
@@ -95,15 +61,15 @@ public class RandomBinaryTree<E> {
 	
 	/* Returns true if the tree with the given root contains the given
 	 * element and false otherwise. */
-	private boolean contains(TreeNode<E> root, E element) {
+	private boolean contains(RandomTreeNode<E> root, E element) {
 		if (root == null) {
 			return false;
 		} else {
 			if (root.data.equals(element)) {
 				return true;
 			} else {
-				return contains(root.children[0], element) ||
-					   contains(root.children[1], element);
+				return contains(root.left, element) ||
+					   contains(root.right, element);
 			}
 		}
 	}
@@ -115,38 +81,37 @@ public class RandomBinaryTree<E> {
 	 */
 	public E getRandomElement() {
 		int index = new Random().nextInt(size);
-		return get(overallRoot, index).elementFound;
+		return getRandomElement(overallRoot, index);
 	}
 	
-	/* Returns a Result object storing both an element and the number of nodes
-	 * traversed in the recursive call.  The element will be non null only if 
-	 * the element at the given index was found. */
-	private Result get(TreeNode<E> root, int index) {
-		Result result;
-		if (index == 0) {
-			result = new Result();
-			result.elementFound = root.data;
-			result.nodesTraversed = 1;
-		} else {
-			Result leftResult = get(root.children[0], index - 1);
-			if (leftResult.elementFound != null) {
-				result = leftResult;
+	/* Returns the data stored in the node with the given index in the 
+	 * tree with the given root.  Returns null if there is no node
+	 * with the given index in the given tree.  */
+	private E getRandomElement(RandomTreeNode<E> root, int index) {
+		if (root != null) {
+			if (root.index == index) {
+				return root.data;
+			} else if (root.index > index) {
+				return getRandomElement(root.left, index);
 			} else {
-				result = get(root.children[1], index - 1 - leftResult.nodesTraversed);
+				return getRandomElement(root.right, index);
 			}
 		}
-		return result;
+		return null;
 	}
 	
-	/* Holds the result needed for getting a random element from this tree. */
-	private class Result {
-		public int nodesTraversed;
-		public E elementFound;
+	/* Node class for this tree; nodes are the same as normal TreeNodes except 
+	 * they also store their location in this tree. */
+	private static class RandomTreeNode<E> {
+		public E data;
+		public int index;
+		public RandomTreeNode<E> left;
+		public RandomTreeNode<E> right;
 		
-		/* Constructs a new, empty Result object. */
-		public Result() {
-			nodesTraversed = 0;
-			elementFound = null;
+		/* Constructs a RandomTreeNode with the given data and index. */
+		public RandomTreeNode(E data, int index) {
+			this.data = data;
+			this.index = index;
 		}
 	}
 }
