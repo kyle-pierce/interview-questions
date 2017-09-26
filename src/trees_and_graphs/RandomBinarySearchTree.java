@@ -58,7 +58,10 @@ public class RandomBinarySearchTree<E extends Comparable<E>> {
 	
 	/* Given a root and an element, removes the element from the tree
 	 * with the given root.  Returns the updated reference to the
-	 * root of the tree. */
+	 * root of the tree.
+	 * 
+	 * Moving the data around seems like bad style, but this is by
+	 * far the simplest, most efficient way of which I can think. */
 	private RandomTreeNode<E> delete(RandomTreeNode<E> root, E element) {
 	    if (root != null) {
 		if (element.compareTo(root.data) < 0) {
