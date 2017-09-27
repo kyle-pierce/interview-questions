@@ -170,7 +170,7 @@ public class Strings {
 		if (Math.abs(s1.length() - s2.length()) > 1) {
 			return false;
 		}
-		
+	
 		String shorter = s1.length() <= s2.length() ? s1 : s2;
 		String longer = s1.length() <= s2.length() ? s2: s1;
 		
@@ -236,5 +236,43 @@ public class Strings {
 	/* Returns true if the two given Strings are rotations of each other */
 	public static boolean isRotation(String s1, String s2) {
 		return (s1.length() == s2.length() && (s1 + s1).contains(s2));
+	}
+	
+	/* Returns the minimum number of changes that can be made to the given
+	 * Strings (additions, subtractions, replacements) such that they
+	 * two Strings become equal. */
+	public static int numChanges(String s1, String s2) {
+	    return numChanges(s1, s2, 0);
+	}
+	
+	/* Returns the minimum number of changes that can be made to the given
+	 * Strings starting at the given index such that they become equal.
+	 * Assumes the Strings are equal up to the given index. */
+	private static int numChanges(String s1, String s2, int index) {
+	    String shorter = s1.length() < s2.length() ? s1 : s2;
+	    String longer = s1.length() < s2.length() ? s2 : s1;
+	    
+	    if (index >= longer.length()) {
+		return 0;
+	    } else if (index < shorter.length()) {
+    	    	char shortChar = shorter.charAt(index);
+    	    	char longChar = longer.charAt(index);
+    	    	int changesFromAddition = Integer.MAX_VALUE;
+    	    	int changesFromReplacement = 0;
+    	    
+    	    	if (longChar != shortChar) {
+    	    	    if (shorter.length() != longer.length()) {
+    	    		String lenghthenedShorter = shorter.substring(0, index) + longChar + 
+    	    			shorter.substring(index);
+    	    		changesFromAddition = numChanges(lenghthenedShorter, longer, index + 1);
+    	    	    }
+    	    	    String updatedShorter = shorter.substring(0, index) + longChar
+    	    	    		+ shorter.substring(index + 1);
+    	    	    changesFromReplacement = numChanges(updatedShorter, longer, index + 1);
+    	    	}
+    	    	return Math.min(changesFromAddition, changesFromReplacement) + 1;
+	    } else {
+		return 1 + numChanges(shorter + longer.charAt(index), longer, index + 1);
+	    }
 	}
 }

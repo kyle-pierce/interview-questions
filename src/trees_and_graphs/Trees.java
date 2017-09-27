@@ -136,7 +136,7 @@ public class Trees {
 	 * highest possible depth down the tree. Returns null if there is no common
 	 * ancestor between the given elements. */
 	public static TreeNode<Integer> firstCommonAncestor(TreeNode<Integer> root, 
-												        int elementOne, int elementTwo) {
+							    int elementOne, int elementTwo) {
 		return findCommonAncestor(root, elementOne, elementTwo).node;
 	}
 	
@@ -303,5 +303,22 @@ public class Trees {
 					isSubtree(one.children[0], two.children[0]) &&
 					isSubtree(one.children[1], two.children[1]);
 		}
+	}
+	
+	/* Returns the number of paths down the tree with the given root with
+	 * the given sum.  Paths may not start at the root and may not end 
+	 * at a leaf node. */
+	public static int countPathsWithSum(TreeNode<Integer> root, int sum) {
+	    return countPathsWithSum(root, sum, 0);
+	}
+
+	private static int countPathsWith(TreeNode<Integer> root, int goal, int currentSum) {
+	    int paths = 0;
+	    if (root != null) {
+		if (goal - root.data == 0) {
+		    paths++;
+		}
+		paths += countPathsWithSum(root.children[0], goal, currentSum)
+	    }
 	}
 }
