@@ -321,4 +321,36 @@ public class Trees {
 		paths += countPathsWithSum(root.children[0], goal, currentSum)
 	    }
 	}
+	
+	public TreeNode<Integer> buildTreeFromTraversals(int[] pre, int[] post) {
+	    return buildTreeFromTraversals(pre, post, pre.length, 0, 0);
+	}
+	
+	private TreeNode<Integer> buildTreeFromTraversals(int[] pre, int[] post, int size,
+							  int preIndex, int postIndex) {
+	    if (size == 0) {
+		return null;
+	    }
+	    
+	    TreeNode<Integer> root = new TreeNode<>(pre[preIndex]);
+	    
+	    int index = -1;
+	    for (int i = postIndex; i < postIndex + size; i++) {
+		if (post[i] == pre[preIndex + 1]) {
+		    index = i;
+		}
+	    }
+	    
+	    int sizeLeft = index - postIndex + 1;
+	    int sizeRight = size - 1 - sizeLeft;
+	    int preIndexLeft = preIndex + 1;
+	    int postIndexLeft = postIndex;
+	    int preIndexRight = preIndex + sizeLeft + 1;
+	    int postIndexRight = postIndex + sizeLeft;
+	    
+	    root.children[0] = buildTreeFromTraversals(pre, post, sizeLeft, preIndexLeft, postIndexLeft);
+	    root.children[1] = buildTreeFromTraversals(pre, post, sizeRight, preIndexRight, postIndexRight);
+	    
+	    return root;
+	}
 }
